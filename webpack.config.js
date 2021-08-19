@@ -9,6 +9,7 @@ module.exports = {
     filename: "[name].bundle.js",
     publicPath: "/"
   },
+  target: ['web','es6'],
   module: {
     rules: [
       {
