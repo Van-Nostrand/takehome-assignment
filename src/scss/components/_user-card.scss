@@ -1,0 +1,40 @@
+@use '../abstracts/vars';
+.user-card {
+  height: 10rem;
+  width: 30rem;
+
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+
+  background-color: vars.$slightly-grey;
+  border-radius: 1rem;
+
+  font-size: vars.$regular-font-size;
+
+  &-photo {
+    position: relative;
+    width: 35%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      height: 70%;
+    }
+  }
+  &-info {
+    position: relative;
+    width: 65%;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    &-email {
+      color: vars.$email-blue;
+    }
+  }
+}

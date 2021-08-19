@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import MessagePost from './components/MessagePost';
-import { fetchAllUsers } from './constants/apiCalls';
+import UserCard from './components/UserCard';
+import { 
+  fetchAllUsers, 
+  fetchAllPosts, 
+  fetchAllAlbums, 
+  fetchAllComments, 
+  fetchAllPhotos 
+} from './constants/apiCalls';
+
+
 
 /*
   users
@@ -10,17 +19,24 @@ import { fetchAllUsers } from './constants/apiCalls';
       photos
 
 */
+// const ENDPOINTS = ['users','posts','comments','albums','photos'];
 export default function App() {
 
   const [ users, setUsers ] = useState([]);
   const [ posts, setPosts ] = useState([]);
   const [ loading, setLoading ] = useState(true);
 
-  const ENDPOINTS = ['users','posts','comments','albums','photos'];
 
   useEffect(() => {
-    fetchAllUsers().then(u => setUsers(u));
+    // fetchAllUsers()
+    //   .then(u => setUsers(u));
+    // fetchAllPosts()
+    //   .then(p => setPosts(p));
+    // fetchAllPhotos()
+    //   .then(a => console.log(a));
+    setLoading(false);
   },[]);
+
   useEffect(() => {
     if (users && users.length > 0) {
       fetch('https://jsonplaceholder.typicode.com/posts')
@@ -31,7 +47,6 @@ export default function App() {
     }
   },[users]);
 
-
   let postElements = posts.map((p, i) => {
     // return (
     //   <MessagePost 
@@ -41,6 +56,9 @@ export default function App() {
     //   />
     // )
   })
+
+  // console.log(users);
+  // console.log(posts);
     
   if (loading) {
     return (<div>LOADING</div>);
@@ -48,6 +66,7 @@ export default function App() {
   return(
     <div className="dashboard-container">
       {/* <ul>{postElements}</ul> */}
+      <UserCard />
     </div>
   )
 }
