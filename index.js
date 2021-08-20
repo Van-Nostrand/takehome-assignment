@@ -5,9 +5,16 @@ import "./src/scss/main.scss";
 import { Provider } from 'react-redux';
 import configureStore from './src/store/configureStore';
 
+const AppWithProvisions = () => {
+  const store = configureStore();
+  
+
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
 
 
-ReactDOM.render(
-    <App />, 
-  document.getElementById("root")
-);
+ReactDOM.render(<AppWithProvisions />, document.getElementById("root"));

@@ -1,11 +1,9 @@
 export const initialState = {
-  appContext: {
     users: [],
     posts: [],
     loadingUsers: true,
-    loadingPosts: false,
+    loadingPosts: true,
     view: 1,
     selectedUserId: null,
     selectedPostId: null
-  }
 }

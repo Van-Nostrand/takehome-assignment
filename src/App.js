@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { 
   Post, 
   UserCard,
@@ -19,14 +20,32 @@ import {
   fetchSomething
 } from './constants/apiCalls';
 
+import {
+  loadUsers, 
+  loadPosts, 
+  basicSetState,
+  loadUsersAndPosts
+} from './store/actions';
+
+import { useShallowEqual } from './hooks/useShallowEqual';
 import { useGetWindowSize } from './hooks/useGetWindowSize';
 
 export default function App() {
 
-  const [ users, setUsers ] = useState([]);
-  const [ posts, setPosts ] = useState([]);
-  const [ loadingUsers, setLoadingUsers ] = useState(true);
-  const [ loadingPosts, setLoadingPosts ] = useState(true);
+  const dispatch = useDispatch();
+  const { 
+    users, 
+    posts, 
+    loadingUsers, 
+    loadingPosts,
+  } = useSelector(state => state);
+
+  // } = useShallowEqual(state => state.appContext);
+
+  // const [ users, setUsers ] = useState([]);
+  // const [ posts, setPosts ] = useState([]);
+  // const [ loadingUsers, setLoadingUsers ] = useState(true);
+  // const [ loadingPosts, setLoadingPosts ] = useState(true);
   const [ view, setView ] = useState(1);
   const [ selectedUserId, setSelectedUserId ] = useState(2);
   const [ selectedPostId, setSelectedPostId ] = useState(null);
@@ -34,21 +53,23 @@ export default function App() {
   const windowSize = useGetWindowSize();
 
   useEffect(() => {
-    Promise.all([
-      fetchSomething('users'),
-      fetchSomething('posts')
-    ]).then(([userData, postData]) => {
-        setUsers(userData);
-        setPosts(postData);
-        setLoadingUsers(false);
-        setLoadingPosts(false);
-      });
-    
+    // Promise.all([
+    //   fetchSomething('users'),
+    //   fetchSomething('posts')
+    // ]).then(([userData, postData]) => {
+    //     dispatch(basicSetState({
+    //       users: userData,
+    //       posts: postData,
+    //       loadingUsers: false,
+    //       loadingPosts: false
+    //     }))
+    //   });
+    dispatch(loadUsersAndPosts());
   },[]);
 
   // a lot of the post titles are super long gibberish, I found that annoying and added this
   const reformatPosts = (posts) => {
-    let newposts = posts.map(p => {
+    return posts.map(p => {
       let newTitle = p.title.split(" ");
       if (newTitle.length > 4) { 
         newTitle = newTitle.slice(0,3).join(" ")
@@ -58,7 +79,7 @@ export default function App() {
       } 
       return ({...p, title: newTitle});
     });
-    return newposts;
+    
   }
 
   const selectUser = (id) => {
@@ -82,6 +103,9 @@ export default function App() {
       default: return <div>Error</div>
     }
   }
+
+  console.log('src/App.js: loadingUsers is ', loadingUsers);
+
   return(
     <div className="dashboard">
       { windowSize.width > 900 ?
@@ -92,7 +116,8 @@ export default function App() {
       <div className="dashboard-inner">
         <Topbar value={view} handleSelect={setView} />
         <div className="dashboard-component-container">
-          { loadingPosts || loadingUsers ? 
+          {/* { loadingPosts || loadingUsers ?  */}
+          { posts.length === 0 || users.length === 0 ? 
             <LoadingDiv />
             :
             renderSwitch()

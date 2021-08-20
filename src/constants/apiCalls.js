@@ -1,15 +1,15 @@
 
 const ROOT_URL = 'https://jsonplaceholder.typicode.com';
 
-export function fetchSomething(thing) {
-  return fetch(`${ROOT_URL}/${thing}`).then(res => res.json());
+export async function fetchSomething(thing) {
+  return await fetch(`${ROOT_URL}/${thing}`).then(res => res.json());
 }
 
-export function fetchUsersItems(userId, item) {
+export async function fetchUsersItems(userId, item) {
   return fetch(`${ROOT_URL}/${item}?userId=${userId}`).then(res => res.json());
 }
 
-export function fetchPostComments(postId) {
+export async function fetchPostComments(postId) {
   return fetch(`${ROOT_URL}/posts/${postId}/comments`).then(res => res.json());
 }
 

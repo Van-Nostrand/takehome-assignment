@@ -2,22 +2,32 @@ import { initialState } from './initialState';
 
 function rootReducer(state = initialState, action) {
   switch(action.type) {
-    case 'ADD_TODO': 
+    case 'REQUESTING_USERS': 
       return {
         ...state, 
-        todos: [ ...state.todos, action.payload ], 
-        inputText: '' 
+        loadingUsers: true 
       }
-    case 'DELETE_TODO':
-      const filteredTodos = state.todos.filter(todo => todo.id !== action.id);
+    case 'LOAD_USERS':
       return { 
         ...state, 
-        todos: filteredTodos 
+        users: action.users,
+        loadingUsers: false
       }
-    case 'CHANGE_INPUT_TEXT':
+    case 'REQUESTING_POSTS':
       return { 
         ...state, 
-        inputText: action.val 
+        loadingPosts: true,
+      }
+    case 'LOAD_POSTS':
+      return {
+        ...state,
+        posts: action.posts,
+        loadingPosts: false
+      }
+    case 'BASIC_SET_STATE':
+      return {
+        ...state,
+        ...action.payload
       }
     default: return state;
   }
