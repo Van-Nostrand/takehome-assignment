@@ -1,12 +1,14 @@
-import React, {useState} from 'react'
+import React from 'react';
 
 export default function SearchTypeSelector(props) {
 
   return (
-    <div className="search-type-selector">
-      <select className="selector" value={props.value} onChange={props.handleSelect}>
+    <div className="search-by-what">
+      <label htmlFor="fl-selector">Sort By</label>
+      <select name="fl-selector" className="search-by-what-selector" value={props.value} onChange={e => props.handleSelect(e.target.value)}>
         <option value="0">First Name</option>
         <option value="1">Last Name</option>
+        <option value="2">Username</option>
       </select>
     </div>
   )

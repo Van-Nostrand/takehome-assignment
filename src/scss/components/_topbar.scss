@@ -1,0 +1,20 @@
+@use '../abstracts/vars';
+@use '../abstracts/mixins';
+
+
+.topbar {
+  position: relative;
+  width: 100%;
+  // width:  calc(100% - (#{vars.$dashboard-padding} * 2) - #{vars.$sidebar-width});
+  height: vars.$topbar-height;
+  
+  flex-shrink: 0; 
+  
+  background-color: red;
+
+  @include mixins.respond(tab-port) {
+    position: fixed;
+    top: vars.$dashboard-padding;
+    width: calc(100% - (#{vars.$dashboard-padding} * 2));
+  }
+}

@@ -1,0 +1,22 @@
+@use '../abstracts/vars';
+@use '../abstracts/mixins';
+
+.post {
+  width: 65%;
+
+  border: 2px solid green;
+
+  font-size: vars.$regular-font-size;
+
+  @include mixins.respond(tab-port) {
+    width: 85%;
+  }
+
+  div {
+    font-size: vars.$bigger-font-size;
+  }
+
+  p {
+    font-size: vars.$regular-font-size;
+  }
+}

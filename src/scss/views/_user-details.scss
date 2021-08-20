@@ -1,0 +1,60 @@
+@use '../abstracts/vars';
+
+.user-details {
+  position: relative;
+
+  display: flex;
+  flex-flow: column;
+  justify-content: start;
+  align-items: flex-start;
+
+  font-size: vars.$regular-font-size;
+
+  &-info {
+    display: flex;
+    flex-flow: row;
+
+    .user-details-section {
+      border: 1px solid black;
+      padding: 2rem;
+      margin: 4rem;
+
+      a {
+        display: block;
+      }
+
+      &-title {
+        font-size: vars.$large-font-size;
+        margin-bottom: 1rem;
+      }
+      &-items > * {
+        margin: 0.3rem 0;
+        letter-spacing: 0.1rem;
+      }
+    }
+  }
+
+  // &-company {
+  //   display: grid;
+  //   grid-template-rows: 1fr 1fr 1fr;
+  //   // width: 40rem;
+  //   /* offset-x | offset-y | blur-radius | spread-radius | color */
+  //   box-shadow: 0 0 0.6rem 0.5rem rgba(0,0,0,0.6);
+
+  //   & div {
+  //     display: inline;
+  //   }
+
+  //   & div:nth-child(1), & div:nth-child(2) {
+  //     grid-row: 1;
+  //   }
+  //   & div:nth-child(3), & div:nth-child(4) {
+  //     grid-row: 2;
+  //   }
+  //   & div:nth-child(5), & div:nth-child(6) {
+  //     grid-row: 3;
+  //   }
+  // }
+
+
+}

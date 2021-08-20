@@ -1,0 +1,16 @@
+
+.wall {
+  position: relative;
+  
+  display: flex;
+  flex-flow: column;
+  justify-content: start;
+  align-items: center;
+
+  ul {
+    display: flex;
+    flex-flow: column;
+    justify-content: start;
+    align-items: center;
+  }
+}

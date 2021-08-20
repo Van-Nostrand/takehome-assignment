@@ -1,72 +1,94 @@
 import React, { useState, useEffect } from "react";
-import MessagePost from './components/MessagePost';
-import UserCard from './components/UserCard';
 import { 
-  fetchAllUsers, 
-  fetchAllPosts, 
-  fetchAllAlbums, 
-  fetchAllComments, 
-  fetchAllPhotos 
+  Post, 
+  UserCard,
+  UserSearchForm,
+  SearchTypeSelector,
+  Topbar,
+  Sidebar,
+  LoadingDiv
+} from './components';
+
+import {
+  UserList,
+  Wall,
+  UserDetails,
+  PostDetails
+} from './views';
+import { 
+  fetchSomething
 } from './constants/apiCalls';
 
+import { useGetWindowSize } from './hooks/useGetWindowSize';
 
-
-/*
-  users
-    posts
-      comments
-    albums
-      photos
-
-*/
-// const ENDPOINTS = ['users','posts','comments','albums','photos'];
 export default function App() {
 
   const [ users, setUsers ] = useState([]);
   const [ posts, setPosts ] = useState([]);
-  const [ loading, setLoading ] = useState(true);
-
+  const [ loadingUsers, setLoadingUsers ] = useState(true);
+  const [ loadingPosts, setLoadingPosts ] = useState(true);
+  const [ view, setView ] = useState(1);
+  const [ selectedUserId, setSelectedUserId ] = useState(2);
+  const [ selectedPostId, setSelectedPostId ] = useState(null);
+  
+  const windowSize = useGetWindowSize();
 
   useEffect(() => {
-    // fetchAllUsers()
-    //   .then(u => setUsers(u));
-    // fetchAllPosts()
-    //   .then(p => setPosts(p));
-    // fetchAllPhotos()
-    //   .then(a => console.log(a));
-    setLoading(false);
+    fetchSomething('users')
+      .then(u => setUsers(u)).then(() => setLoadingUsers(false));
+    fetchSomething('posts')
+      .then(p => reformatPosts(p)).then(p => setPosts(p)).then(() => setLoadingPosts(false));
   },[]);
 
-  useEffect(() => {
-    if (users && users.length > 0) {
-      fetch('https://jsonplaceholder.typicode.com/posts')
-        .then(res => res.json())
-        .then(posts => {
+  // a lot of the post titles are super long gibberish, I found that annoying and added this
+  const reformatPosts = (posts) => {
+    let newposts = posts.map(p => {
+      let newTitle = p.title.split(" ");
+      if (newTitle.length > 4) { newTitle = newTitle.slice(0,3).join(" ")}
+      else newTitle = newTitle.join(" "); 
+      return ({...p, title: newTitle});
+    });
+    return newposts;
+  }
 
-        })
+  const selectUser = (id) => {
+    setSelectedUserId(id);
+    setView(2);
+  }
+
+  const selectPost = (id) => {
+    setSelectedPostId(id);
+    setView(3);
+  }
+
+
+  const renderSwitch = () => {
+ 
+    switch(parseInt(view)) {
+      case 0: return <UserList users={users} selectUser={selectUser} /> 
+      case 1: return <Wall posts={posts} selectPost={selectPost} />
+      case 2: return <UserDetails profile={users.filter(u => u.id === selectedUserId)[0]} />
+      case 3: return <PostDetails post={posts.filter(p => p.id === selectedPostId)[0]} />
+      default: return <div>Error</div>
     }
-  },[users]);
-
-  let postElements = posts.map((p, i) => {
-    // return (
-    //   <MessagePost 
-    //     key={`post${i}`} 
-    //     userName={users[p.userId - 1].name} 
-    //     text={p.body} 
-    //   />
-    // )
-  })
-
-  // console.log(users);
-  // console.log(posts);
-    
-  if (loading) {
-    return (<div>LOADING</div>);
   }
   return(
-    <div className="dashboard-container">
-      {/* <ul>{postElements}</ul> */}
-      <UserCard />
+    <div className="dashboard">
+      { windowSize.width > 900 ?
+        <Sidebar />
+        :
+        <></>
+      }
+      <div className="dashboard-inner">
+        <Topbar value={view} handleSelect={setView} />
+        <div className="dashboard-component-container">
+          { loadingPosts || loadingUsers ? 
+            <LoadingDiv />
+            :
+            renderSwitch()
+          }
+        </div>
+      </div>
     </div>
   )
 }

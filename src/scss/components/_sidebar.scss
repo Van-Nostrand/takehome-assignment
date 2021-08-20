@@ -1,0 +1,9 @@
+@use '../abstracts/vars';
+@use '../abstracts/mixins';
+
+.sidebar {
+  height: 100%;
+  width: vars.$sidebar-width;
+  
+  background-color: vars.$sidebar-blue;
+}
