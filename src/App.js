@@ -5,12 +5,14 @@ import {
   UserSearchForm,
   SearchTypeSelector,
   Topbar,
-  Sidebar
+  Sidebar,
+  LoadingDiv
 } from './components';
 
 import {
   UserList,
   Wall,
+  UserDetails
 } from './views';
 import { 
   fetchAllUsers, 
@@ -28,7 +30,8 @@ export default function App() {
   const [ posts, setPosts ] = useState([]);
   const [ loadingUsers, setLoadingUsers ] = useState(true);
   const [ loadingPosts, setLoadingPosts ] = useState(true);
-  const [ view, setView ] = useState(1);
+  const [ view, setView ] = useState(2);
+  const [ selectedUserId, setSelectedUserId ] = useState(2);
   
   const windowSize = useGetWindowSize();
 
@@ -41,16 +44,18 @@ export default function App() {
     console.log("loading done")
   },[]);
 
-  let centerElement = <div>LOADING</div>
-  if (!loadingUsers) {
+  const selectUser = (id) => {
+    setSelectedUserId(id);
+    setView(2);
+  }
+
+
+  const renderSwitch = () => {
     switch(parseInt(view)) {
-      case 0:
-        centerElement = <UserList users={users} /> 
-        break;
-      case 1:
-        centerElement = <Wall posts={posts} />
-        break;
-      default: centerElement = <div>Error</div>
+      case 0: return <UserList users={users} selectUser={selectUser} /> 
+      case 1: return <Wall posts={posts} />
+      case 2: return <UserDetails profile={users.filter(u => u.id === selectedUserId)[0]} />
+      default: return <div>Error</div>
     }
   }
   
@@ -64,7 +69,11 @@ export default function App() {
       <div className="dashboard-inner">
         <Topbar value={view} handleSelect={setView} />
         <div className="dashboard-component-container">
-          {centerElement}
+          { (view === 0 && loadingUsers) || (view === 1 && loadingPosts) ? 
+            <LoadingDiv />
+            :
+            renderSwitch()
+          }
         </div>
       </div>
     </div>

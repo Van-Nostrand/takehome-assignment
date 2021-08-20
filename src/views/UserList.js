@@ -7,13 +7,18 @@ import {
 
 export default function UserList(props) {
 
+  const handleSelectUser = (e, id) => {
+    e.stopPropagation();
+    props.selectUser(id)
+  }
 
   let userElements = props.users.map((u, i) => (
-    <li key={`user-${i}`}>
+    <li key={`user-${i}`} onClick={e => handleSelectUser(e, u.id)}>
       <UserCard 
         name={u.name}
         username={u.username}
         email={u.email}
+        id={u.id}
       />
     </li>
   ))

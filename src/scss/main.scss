@@ -11,6 +11,7 @@
 
 @use './views/user-list';
 @use './views/wall';
+@use './views/user-details';
 
 
 .dashboard {
@@ -45,4 +46,8 @@
       }
     }
   }
+}
+
+.loading-div {
+  font-size: 35px;
 }
