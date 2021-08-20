@@ -3,15 +3,14 @@ import { Post } from '../components';
 
 export default function Wall(props) {
 
-
   let wallPosts;
   if (props.posts.length > 0) {
+    console.log("iterating over posts")
     wallPosts = props.posts.map((p, i) => (
       <Post 
-        key={`Post-${i}`} 
-        body={p.body}
-        title={p.title}
-        id={p.id}
+        key={`post-${i}`} 
+        post={p}
+        selectPost={props.selectPost}
       />
     ))
   }

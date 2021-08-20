@@ -1,11 +1,16 @@
 import React from 'react'
 
 export default function Post(props) {
-
+  
   const { body, id, title } = props.post;
   
+  const handleClick = (e) => {
+    e.stopPropagation();
+    props.selectPost(id);
+  }
+  
   return (
-    <li className="post">
+    <li className="post" onClick={handleClick}>
       <div>{title}</div>
       <p>{body}</p>
     </li>

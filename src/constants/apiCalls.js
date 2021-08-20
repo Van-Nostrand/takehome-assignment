@@ -1,36 +1,22 @@
-import axios from 'axios';
 
 const ROOT_URL = 'https://jsonplaceholder.typicode.com';
 
-export function fetchAllUsers() {
-  return fetch(`${ROOT_URL}/users`).then(res => res.json());
-}
-
-export function fetchAllPosts() {
-  return fetch(`${ROOT_URL}/posts`).then(res => res.json());
-}
-
-export function fetchAllAlbums() {
-  return fetch(`${ROOT_URL}/albums`).then(res => res.json());
-}
-
-export function fetchAllComments() {
-  return fetch(`${ROOT_URL}/comments`).then(res => res.json());
-}
-
-export function fetchAllPhotos() {
-  return fetch(`${ROOT_URL}/photos`).then(res => res.json());
+export function fetchSomething(thing) {
+  return fetch(`${ROOT_URL}/${thing}`).then(res => res.json());
 }
 
 export function fetchUsersItems(userId, item) {
-  // basic error testing
-  if (!['posts','albums','comments','photos'].includes(item)) {
-    console.log("error fetching the users things... you passed in ", item);
-  }
   return fetch(`${ROOT_URL}/${item}?userId=${userId}`).then(res => res.json());
 }
+
+export function fetchPostComments(postId) {
+  return fetch(`${ROOT_URL}/posts/${postId}/comments`).then(res => res.json());
+}
+
+
+
 /////////////////////////////////
-// vvv for reference vvv
+//  for reference 
 let standardUserObject = {
   address: { 
     city: "Gwenborough",

@@ -8,6 +8,7 @@ export default function SearchTypeSelector(props) {
       <select name="fl-selector" className="search-by-what-selector" value={props.value} onChange={e => props.handleSelect(e.target.value)}>
         <option value="0">First Name</option>
         <option value="1">Last Name</option>
+        <option value="2">Username</option>
       </select>
     </div>
   )

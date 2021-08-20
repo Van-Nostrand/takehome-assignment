@@ -1,0 +1,24 @@
+@use '../abstracts/vars';
+@use '../abstracts/mixins';
+
+.post-details {
+
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  &-title, &-body {
+    font-size: vars.$bigger-font-size;
+    margin: 1rem;
+    width: 60%;
+  }
+ 
+
+  &-comments {
+    width: 80%;
+    padding: 2rem;
+    // box-shadow: 0 0 0.5rem 0.5rem rgba(0,0,0,0.1);
+
+  }
+}

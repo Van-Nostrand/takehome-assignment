@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LoadingDiv, Post } from '../components';
+import { LoadingDiv, Post, UserDetailsSection } from '../components';
 import { fetchUsersItems } from '../constants/apiCalls';
 
 export default function UserDetails(props) {
@@ -20,34 +20,29 @@ export default function UserDetails(props) {
 
   return (
     <div className="user-details">
-      <div className="user-details-header">Contact Info</div>
-      <div className="user-details-name">{name}</div>
-      <div className="user-details-username">{username}</div>
-      <div className="user-details-phone">{phone}</div>
-      <div className="user-details-website">{website}</div>
-      <div className="user-details-email">{email}</div>
-      <div className="user-details-header">Address</div>
-      <div className="user-details-address">
-        <div className="user-details-address-city">{address.city}</div>
-        <div className="user-details-address-street">{address.street}</div>
-        <div className="user-details-address-suite">{address.suite}</div>
-        <div className="user-details-address-zipcode">{address.zipcode}</div>
-      </div>
-      <div className="user-details-header">
-        Company
-      </div>
-      <div className="user-details-company">
-        <div className="user-details-company-label">Name: </div>
-        <div className="user-details-company-name">{company.name}</div>
-        
-        <div className="user-details-company-label">Catchphrase: </div>
-        <div className="user-details-company-catchphrase">{company.catchPhrase}</div>
-        
-        <div className="user-details-company-label">BS: </div>
-        <div className="user-details-company-bull">{company.bs}</div>
-      </div>
-      
+      <div className="user-details-info">
+        <UserDetailsSection sectionTitle="Contact Info">
+          <div>{name}</div>
+          <div>{username}</div>
+          <div>{phone}</div>
+          <a href={website}>{website}</a>
+          <a href={`mailto:${email}`}>{email}</a>
+        </UserDetailsSection>
 
+        <UserDetailsSection sectionTitle="Address">
+          <div>{address.city}</div>
+          <div>{address.street}</div>
+          <div>{address.suite}</div>
+          <div>{address.zipcode}</div>
+        </UserDetailsSection>
+          
+        <UserDetailsSection sectionTitle="Company">
+          <div>{company.name}</div>
+          <div>{company.bs}</div>
+          <div style={{fontStyle: 'italic'}}>"{company.catchPhrase}"</div>
+        </UserDetailsSection> 
+      </div>
+           
       <ul className="user-details-posts">
         { posts.length === 0 ? <LoadingDiv /> : postElements }
       </ul>

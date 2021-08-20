@@ -8,10 +8,12 @@
 @use './components/topbar';
 @use './components/sidebar';
 @use './components/post';
+@use './components/comment';
 
 @use './views/user-list';
 @use './views/wall';
 @use './views/user-details';
+@use './views/post-details';
 
 
 .dashboard {
@@ -40,6 +42,9 @@
       width: 100%;
       height: calc(100vh - (#{vars.$dashboard-padding} * 2) - (#{vars.$topbar-height}));
       overflow: auto;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
 
       @include mixins.respond(tab-port) {
         top: vars.$dashboard-padding + vars.$topbar-height;
@@ -50,4 +55,6 @@
 
 .loading-div {
   font-size: 35px;
+  width: 50rem;
+  height: 50rem;
 }

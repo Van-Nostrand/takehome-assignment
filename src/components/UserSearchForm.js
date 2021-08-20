@@ -3,11 +3,12 @@ import SearchTypeSelector from './SearchTypeSelector';
 
 export default function UserSearchForm(props) {
   const [ input, setInput ] = useState('');
-  const [ searchBy, setSearchBy ] = useState(0);
+  
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    props.handleSubmit(e.target.value);
+    props.handleSubmit(input);
   }
   return (
     <div className="user-search-form-container">
@@ -18,8 +19,8 @@ export default function UserSearchForm(props) {
           <input name="name" value={input} onChange={e => setInput(e.target.value)} />
         </form>
         <SearchTypeSelector 
-          value={searchBy}
-          handleSelect={setSearchBy}
+          value={props.sortBy}
+          handleSelect={props.setSortBy}
         />
       </div>
     </div>
@@ -29,5 +30,7 @@ export default function UserSearchForm(props) {
 
 UserSearchForm.defaultProps = {
   handleSubmit: q => console.log("a parent has not passed a handleSubmit function to UserSearchForm. Query is ", q),
+  sortBy: 0,
+  setSortBy: () => console.log("a parent has not passed a setSortBy function to UserSearchForm")
 
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   UserCard,
   UserSearchForm
@@ -7,12 +7,89 @@ import {
 
 export default function UserList(props) {
 
+  const [ filteredUsers, setFilteredUsers ] = useState(props.users);
+  const [ search, setSearch ] = useState('');
+  const [ sortBy, setSortBy ] = useState(1);
+
+  useEffect(() => {
+    
+    if (search !== '') {
+      let searchReg = new RegExp(`^${search.toLowerCase()}`);
+
+      // firstname lastname username
+      let newFiltered = props.users.filter(u => {
+        switch(parseInt(sortBy)) {
+          case 0: return searchReg.test(u.name.toLowerCase());
+          case 1: return searchReg.test(u.name.toLowerCase().split(" ")[1]);
+          case 2: return searchReg.test(u.username.toLowerCase());
+          default: return searchReg.test(u.name.toLowerCase());
+        }
+      })
+
+      setFilteredUsers(newFiltered);
+    }
+  },[search]);
+
+  useEffect(() => {
+    let newUserList = [...filteredUsers];
+    switch(parseInt(sortBy)){
+      case 0: 
+        newUserList = newUserList.sort(sortByFirstName); 
+        setFilteredUsers(newUserList);
+        break;
+      case 1: 
+        newUserList = newUserList.sort(sortByLastName);  
+        setFilteredUsers(newUserList);
+        break;
+      case 2: 
+        newUserList = newUserList.sort(sortByUserName); 
+        setFilteredUsers(newUserList); 
+        break;
+    }
+    
+  },[sortBy]);
+
   const handleSelectUser = (e, id) => {
     e.stopPropagation();
     props.selectUser(id)
   }
 
-  let userElements = props.users.map((u, i) => (
+
+  const sortByFirstName = (first, second) => {
+
+    // dealing with "Mr" and "Mrs"
+    let firstName, secondName;
+    if (/^Mr/.test(first.name) || /^Mrs/.test(first.name)) firstName = first.name.split(" ").slice(1).join(" ");
+    else firstName = first.name;
+    if (/^Mr/.test(second.name) || /^Mrs/.test(second.name)) secondName = second.name.split(" ").slice(1).join(" ");
+    return first.name.localeCompare(second.name, 'en', {sensitivity: 'base', ignorePunctuation: true});
+  }
+
+
+  const sortByLastName = (first, second) => {
+    // dealing with "Mr" and "Mrs"
+    let firstLastName, secondLastName;
+    let firstNameArray = first.name.split(" ");
+    let secondNameArray = second.name.split(" ");
+    if (/^Mr/.test(firstNameArray[0]) || /^Mrs/.test(firstNameArray[0])) {
+      firstLastName = firstNameArray[2];
+    }
+    else firstLastName = firstNameArray[1];
+    if (/^Mr/.test(secondNameArray[0]) || /^Mrs/.test(secondNameArray[0])) {
+      secondLastName = secondNameArray[2];
+    }
+    else secondLastName = secondNameArray[1];
+    
+   
+    return firstLastName.localeCompare(secondLastName, 'en', {sensitivity: 'base', ignorePunctuation: true});
+  }
+
+  const sortByUserName = (first, second) => {
+    
+    return first.username.localeCompare(second.username, 'en', {sensitivity: 'base', ignorePunctuation: true});
+  }
+
+  let userElements = filteredUsers.map((u, i) => (
     <li key={`user-${i}`} onClick={e => handleSelectUser(e, u.id)}>
       <UserCard 
         name={u.name}
@@ -24,11 +101,10 @@ export default function UserList(props) {
   ))
   return (
     <div className="user-list-container">
-      <UserSearchForm />
+      <UserSearchForm handleSubmit={setSearch} sortBy={sortBy} setSortBy={setSortBy} />
       <ul className="user-list">
         {userElements}
       </ul>
-      
     </div>
   )
 }
@@ -82,28 +158,4 @@ UserList.defaultProps = {
       },
     },
   ]
-}
-
-let standardUserObject = {
-  address: { 
-    city: "Gwenborough",
-    geo: { 
-      lat: "-37.3159", 
-      lng: "81.1496" 
-    },
-    street: "Kulas Light",
-    suite: "Apt. 556",
-    zipcode: "92998-3874"
-  },
-  company: { 
-    name: "Romaguera-Crona", 
-    catchPhrase: "Multi-layered client-server neural-net", 
-    bs: "harness real-time e-markets" 
-  },
-  email: "Sincere@april.biz",
-  id: 1,
-  name: "Leanne Graham",
-  phone: "1-770-736-8031 x56442",
-  username: "Bret",
-  website: "hildegard.org",
 }
