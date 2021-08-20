@@ -50,8 +50,12 @@ export default function App() {
   const reformatPosts = (posts) => {
     let newposts = posts.map(p => {
       let newTitle = p.title.split(" ");
-      if (newTitle.length > 4) { newTitle = newTitle.slice(0,3).join(" ")}
-      else newTitle = newTitle.join(" "); 
+      if (newTitle.length > 4) { 
+        newTitle = newTitle.slice(0,3).join(" ")
+      }
+      else {
+        newTitle = newTitle.join(" ");
+      } 
       return ({...p, title: newTitle});
     });
     return newposts;

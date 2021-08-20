@@ -1,4 +1,11 @@
 export const initialState = {
-  todos: [],
-  inputText: ''
+  appContext: {
+    users: [],
+    posts: [],
+    loadingUsers: true,
+    loadingPosts: false,
+    view: 1,
+    selectedUserId: null,
+    selectedPostId: null
+  }
 }
