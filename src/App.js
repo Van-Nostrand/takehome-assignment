@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
-import MessagePost from './components/MessagePost';
-import UserCard from './components/UserCard';
+import { 
+  Post, 
+  UserCard,
+  UserSearchForm,
+  SearchTypeSelector,
+  Topbar,
+  Sidebar
+} from './components';
+
+import {
+  UserList,
+  Wall,
+} from './views';
 import { 
   fetchAllUsers, 
   fetchAllPosts, 
@@ -9,64 +20,53 @@ import {
   fetchAllPhotos 
 } from './constants/apiCalls';
 
+import { useGetWindowSize } from './hooks/useGetWindowSize';
 
-
-/*
-  users
-    posts
-      comments
-    albums
-      photos
-
-*/
-// const ENDPOINTS = ['users','posts','comments','albums','photos'];
 export default function App() {
 
   const [ users, setUsers ] = useState([]);
   const [ posts, setPosts ] = useState([]);
-  const [ loading, setLoading ] = useState(true);
-
+  const [ loadingUsers, setLoadingUsers ] = useState(true);
+  const [ loadingPosts, setLoadingPosts ] = useState(true);
+  const [ view, setView ] = useState(1);
+  
+  const windowSize = useGetWindowSize();
 
   useEffect(() => {
-    // fetchAllUsers()
-    //   .then(u => setUsers(u));
-    // fetchAllPosts()
-    //   .then(p => setPosts(p));
-    // fetchAllPhotos()
-    //   .then(a => console.log(a));
-    setLoading(false);
+    fetchAllUsers()
+      .then(u => setUsers(u)).then(() => setLoadingUsers(false));
+    fetchAllPosts()
+      .then(p => setPosts(p)).then(() => setLoadingPosts(false));
+    
+    console.log("loading done")
   },[]);
 
-  useEffect(() => {
-    if (users && users.length > 0) {
-      fetch('https://jsonplaceholder.typicode.com/posts')
-        .then(res => res.json())
-        .then(posts => {
-
-        })
+  let centerElement = <div>LOADING</div>
+  if (!loadingUsers) {
+    switch(parseInt(view)) {
+      case 0:
+        centerElement = <UserList users={users} /> 
+        break;
+      case 1:
+        centerElement = <Wall posts={posts} />
+        break;
+      default: centerElement = <div>Error</div>
     }
-  },[users]);
-
-  let postElements = posts.map((p, i) => {
-    // return (
-    //   <MessagePost 
-    //     key={`post${i}`} 
-    //     userName={users[p.userId - 1].name} 
-    //     text={p.body} 
-    //   />
-    // )
-  })
-
-  // console.log(users);
-  // console.log(posts);
-    
-  if (loading) {
-    return (<div>LOADING</div>);
   }
+  
   return(
-    <div className="dashboard-container">
-      {/* <ul>{postElements}</ul> */}
-      <UserCard />
+    <div className="dashboard">
+      { windowSize.width > 900 ?
+        <Sidebar />
+        :
+        <></>
+      }
+      <div className="dashboard-inner">
+        <Topbar value={view} handleSelect={setView} />
+        <div className="dashboard-component-container">
+          {centerElement}
+        </div>
+      </div>
     </div>
   )
 }

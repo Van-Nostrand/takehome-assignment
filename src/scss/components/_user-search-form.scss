@@ -1,0 +1,38 @@
+@use '../abstracts/vars';
+@use '../abstracts/mixins';
+
+.user-search-form-container {
+
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  font-size: 2rem;
+
+  @include mixins.respond(tab-port) {
+    flex-flow: column;
+    justify-content: end;
+    align-items: flex-start;
+  }
+
+  &-inner {
+
+    display: flex;
+    flex-flow: row;
+
+    @include mixins.respond(tab-port) {
+      flex-flow: column;
+    }
+
+    .user-search-form {
+      @include mixins.flexColLeft();
+    }
+    
+    .search-by-what {
+      @include mixins.flexColLeft();
+    }
+
+  }
+
+}

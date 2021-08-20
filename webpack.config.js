@@ -7,7 +7,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
-    publicPath: "/"
+    publicPath: "/",
+    assetModuleFilename: 'images/[hash]-[name].[ext]'
   },
   target: ['web','es6'],
   module: {
@@ -54,9 +55,6 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-
-            }
           },
           "css-loader"
         ]
@@ -65,7 +63,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + "/public/index.html",
+      template: path.resolve(__dirname, "public/index.html"),
       inject: "body"
     }),
     new MiniCssExtractPlugin({
@@ -73,8 +71,8 @@ module.exports = {
       chunkFilename: "[id].css"
     })
   ],
-  devtool: 'source-map',
+  devtool: "source-map",
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
   }
 }
