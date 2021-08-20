@@ -3,9 +3,10 @@ import { Post } from '../components';
 
 export default function Wall(props) {
 
+  console.log('src/views/Wall.js: props is ', props);
   let wallPosts;
   if (props.posts.length > 0) {
-    console.log("iterating over posts")
+  
     wallPosts = props.posts.map((p, i) => (
       <Post 
         key={`post-${i}`} 

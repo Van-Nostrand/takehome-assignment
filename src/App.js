@@ -34,10 +34,16 @@ export default function App() {
   const windowSize = useGetWindowSize();
 
   useEffect(() => {
-    fetchSomething('users')
-      .then(u => setUsers(u)).then(() => setLoadingUsers(false));
-    fetchSomething('posts')
-      .then(p => reformatPosts(p)).then(p => setPosts(p)).then(() => setLoadingPosts(false));
+    Promise.all([
+      fetchSomething('users'),
+      fetchSomething('posts')
+    ]).then(([userData, postData]) => {
+        setUsers(userData);
+        setPosts(postData);
+        setLoadingUsers(false);
+        setLoadingPosts(false);
+      });
+    
   },[]);
 
   // a lot of the post titles are super long gibberish, I found that annoying and added this

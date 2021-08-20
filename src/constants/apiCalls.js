@@ -14,7 +14,6 @@ export function fetchPostComments(postId) {
 }
 
 
-
 /////////////////////////////////
 //  for reference 
 let standardUserObject = {

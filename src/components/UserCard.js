@@ -10,7 +10,7 @@ export default function UserCard(props) {
       <div className="user-card-info">
         <div className="user-card-info-name">{props.name}</div>
         <div className="user-card-info-user-name">"{props.username}"</div>
-        <div className="user-card-info-email">{props.email}</div>
+        <a href={`mailto:${props.email}`} className="user-card-info-email">{props.email}</a>
       </div>
     </div>
   )

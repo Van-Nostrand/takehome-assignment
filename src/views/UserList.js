@@ -9,10 +9,11 @@ export default function UserList(props) {
 
   const [ filteredUsers, setFilteredUsers ] = useState(props.users);
   const [ search, setSearch ] = useState('');
-  const [ sortBy, setSortBy ] = useState(1);
+  const [ sortBy, setSortBy ] = useState(0);
 
+
+  // handles searching
   useEffect(() => {
-    
     if (search !== '') {
       let searchReg = new RegExp(`^${search.toLowerCase()}`);
 
@@ -25,11 +26,11 @@ export default function UserList(props) {
           default: return searchReg.test(u.name.toLowerCase());
         }
       })
-
       setFilteredUsers(newFiltered);
     }
   },[search]);
 
+  // handles sorting
   useEffect(() => {
     let newUserList = [...filteredUsers];
     switch(parseInt(sortBy)){
@@ -45,9 +46,10 @@ export default function UserList(props) {
         newUserList = newUserList.sort(sortByUserName); 
         setFilteredUsers(newUserList); 
         break;
+      default: console.log("there's an issue in the sortBy effect")
     }
-    
   },[sortBy]);
+
 
   const handleSelectUser = (e, id) => {
     e.stopPropagation();
@@ -55,8 +57,24 @@ export default function UserList(props) {
   }
 
 
-  const sortByFirstName = (first, second) => {
+  const filterNameTitle = (name, getLastName = false) => {
+    if (/^mr/.test(name.toLowerCase()) || /^mrs/.test(name.toLowerCase()) || /^ms/.test(name.toLowerCase())) {
+      name = getLastName ? 
+        name.toLowerCase().split(" ").slice(2)[0]
+        : 
+        name.toLowerCase().split(" ").slice(1).join(" ");
+    }
+    else {
+      name = getLastName ? 
+        name.toLowerCase().split(" ").slice(1)[0] 
+        : 
+        name.toLowerCase().split(" ").join(" ");
+    }
+    return name;
+  }
 
+
+  const sortByFirstName = (first, second) => {
     // dealing with "Mr" and "Mrs"
     let firstName, secondName;
     if (/^Mr/.test(first.name) || /^Mrs/.test(first.name)) firstName = first.name.split(" ").slice(1).join(" ");
@@ -64,7 +82,6 @@ export default function UserList(props) {
     if (/^Mr/.test(second.name) || /^Mrs/.test(second.name)) secondName = second.name.split(" ").slice(1).join(" ");
     return first.name.localeCompare(second.name, 'en', {sensitivity: 'base', ignorePunctuation: true});
   }
-
 
   const sortByLastName = (first, second) => {
     // dealing with "Mr" and "Mrs"
@@ -79,13 +96,10 @@ export default function UserList(props) {
       secondLastName = secondNameArray[2];
     }
     else secondLastName = secondNameArray[1];
-    
-   
     return firstLastName.localeCompare(secondLastName, 'en', {sensitivity: 'base', ignorePunctuation: true});
   }
 
   const sortByUserName = (first, second) => {
-    
     return first.username.localeCompare(second.username, 'en', {sensitivity: 'base', ignorePunctuation: true});
   }
 
@@ -99,6 +113,7 @@ export default function UserList(props) {
       />
     </li>
   ))
+  
   return (
     <div className="user-list-container">
       <UserSearchForm handleSubmit={setSearch} sortBy={sortBy} setSortBy={setSortBy} />

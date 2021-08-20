@@ -7,7 +7,6 @@ export default function UserSearchForm(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation();
     props.handleSubmit(input);
   }
   return (
