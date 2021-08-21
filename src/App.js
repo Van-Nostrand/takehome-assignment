@@ -27,21 +27,26 @@ export default function App() {
   const [ posts, setPosts ] = useState([]);
   const [ loadingUsers, setLoadingUsers ] = useState(true);
   const [ loadingPosts, setLoadingPosts ] = useState(true);
-  const [ view, setView ] = useState(1);
+  const [ view, setView ] = useState(0);
   const [ selectedUserId, setSelectedUserId ] = useState(2);
   const [ selectedPostId, setSelectedPostId ] = useState(null);
   
   const windowSize = useGetWindowSize();
 
   useEffect(() => {
-    Promise.all([
-      fetchSomething('users'),
-      fetchSomething('posts')
-    ]).then(([userData, postData]) => {
-        setUsers(userData);
-        setPosts(postData);
+    // Promise.all([
+    //   fetchSomething('users'),
+    //   fetchSomething('posts')
+    // ]).then(([userData, postData]) => {
+    //     setUsers(userData);
+    //     setPosts(postData);
+    //     setLoadingUsers(false);
+    //     setLoadingPosts(false);
+    //   });
+    fetchSomething('users')
+      .then(u => {
+        setUsers(u);
         setLoadingUsers(false);
-        setLoadingPosts(false);
       });
     
   },[]);
@@ -88,7 +93,7 @@ export default function App() {
       <div className="dashboard-inner">
         <Topbar value={view} handleSelect={setView} />
         <div className="dashboard-component-container">
-          { loadingPosts || loadingUsers ? 
+          { loadingUsers ? 
             <LoadingDiv />
             :
             renderSwitch()

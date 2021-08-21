@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SearchTypeSelector(props) {
+export default function SortingMethodSelector(props) {
 
   return (
     <div className="search-by-what">
@@ -14,7 +14,7 @@ export default function SearchTypeSelector(props) {
   )
 }
 
-SearchTypeSelector.defaultProps = {
+SortingMethodSelector.defaultProps = {
   value: 1,
   handleSelect: () => console.log("parent has not provided a handler function to SearchTypeSelector, and value is ", e.target.value)
 }

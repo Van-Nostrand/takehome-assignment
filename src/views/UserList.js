@@ -1,54 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import {
   UserCard,
-  UserSearchForm
+  UserSearchForm,
+  SortingMethodSelector
 } from '../components';
+
+import { 
+  sortByFirstName,
+  sortByLastName,
+  sortByUserName,
+  filterTitleFromName
+} from '../constants/sortingFunctions';
 
 
 export default function UserList(props) {
 
   const [ filteredUsers, setFilteredUsers ] = useState(props.users);
-  const [ search, setSearch ] = useState('');
-  const [ sortBy, setSortBy ] = useState(0);
+  const [ searchTerm, setSearchTerm ] = useState('');
+  const [ sortingMethod, setSortingMethod ] = useState(0);
 
 
   // handles searching
   useEffect(() => {
-    if (search !== '') {
-      let searchReg = new RegExp(`^${search.toLowerCase()}`);
-
-      // firstname lastname username
-      let newFiltered = props.users.filter(u => {
-        switch(parseInt(sortBy)) {
-          case 0: return searchReg.test(u.name.toLowerCase());
-          case 1: return searchReg.test(u.name.toLowerCase().split(" ")[1]);
-          case 2: return searchReg.test(u.username.toLowerCase());
-          default: return searchReg.test(u.name.toLowerCase());
-        }
-      })
-      setFilteredUsers(newFiltered);
+    if (searchTerm !== '') {
+      setFilteredUsers(fuzzySearchUsers(props.users, searchTerm));
     }
-  },[search]);
+    else setFilteredUsers([...props.users]);
+  },[searchTerm]);
 
   // handles sorting
   useEffect(() => {
-    let newUserList = [...filteredUsers];
-    switch(parseInt(sortBy)){
+    sortUsers([...filteredUsers]);
+  },[sortingMethod]);
+
+
+  // filters out users based on searchTerm terms
+  // Not using this anymore
+  const searchUsersByMethod = (userList) => {
+    const searchReg = new RegExp(`^${searchTerm.toLowerCase()}`);
+    // by case #: firstname lastname username
+    return userList.filter(u => {
+      switch(parseInt(sortingMethod)) {
+        case 0: return searchReg.test(filterTitleFromName(u.name).toLowerCase());
+        case 1: return searchReg.test(filterTitleFromName(u.name).toLowerCase().split(" ")[1]);
+        case 2: return searchReg.test(u.username.toLowerCase());
+        default: return searchReg.test(filterTitleFromName(u.name).toLowerCase());
+      }
+    })
+  }
+
+
+  // matches users name, email, and username based on searchTerm term
+  const fuzzySearchUsers = (userList, searchTerm) => {
+    let searchReg = new RegExp(`${searchTerm}`, 'i');
+    return userList.filter(u => {
+      if (searchReg.test(u.name) || searchReg.test(u.email) || searchReg.test(u.username)) {
+        return true;
+      }
+      return false;
+    })
+  }
+
+
+  // takes an array of users, sorts em
+  const sortUsers = (userList) => {
+    switch(parseInt(sortingMethod)){
       case 0: 
-        newUserList = newUserList.sort(sortByFirstName); 
-        setFilteredUsers(newUserList);
-        break;
+        return userList.sort(sortByFirstName); 
       case 1: 
-        newUserList = newUserList.sort(sortByLastName);  
-        setFilteredUsers(newUserList);
-        break;
+        return userList.sort(sortByLastName);  
       case 2: 
-        newUserList = newUserList.sort(sortByUserName); 
-        setFilteredUsers(newUserList); 
-        break;
-      default: console.log("there's an issue in the sortBy effect")
+        return userList.sort(sortByUserName); 
+      default: console.log("there's an issue in the sortingMethod effect")
     }
-  },[sortBy]);
+  }
 
 
   const handleSelectUser = (e, id) => {
@@ -56,52 +81,6 @@ export default function UserList(props) {
     props.selectUser(id)
   }
 
-
-  const filterNameTitle = (name, getLastName = false) => {
-    if (/^mr/.test(name.toLowerCase()) || /^mrs/.test(name.toLowerCase()) || /^ms/.test(name.toLowerCase())) {
-      name = getLastName ? 
-        name.toLowerCase().split(" ").slice(2)[0]
-        : 
-        name.toLowerCase().split(" ").slice(1).join(" ");
-    }
-    else {
-      name = getLastName ? 
-        name.toLowerCase().split(" ").slice(1)[0] 
-        : 
-        name.toLowerCase().split(" ").join(" ");
-    }
-    return name;
-  }
-
-
-  const sortByFirstName = (first, second) => {
-    // dealing with "Mr" and "Mrs"
-    let firstName, secondName;
-    if (/^Mr/.test(first.name) || /^Mrs/.test(first.name)) firstName = first.name.split(" ").slice(1).join(" ");
-    else firstName = first.name;
-    if (/^Mr/.test(second.name) || /^Mrs/.test(second.name)) secondName = second.name.split(" ").slice(1).join(" ");
-    return first.name.localeCompare(second.name, 'en', {sensitivity: 'base', ignorePunctuation: true});
-  }
-
-  const sortByLastName = (first, second) => {
-    // dealing with "Mr" and "Mrs"
-    let firstLastName, secondLastName;
-    let firstNameArray = first.name.split(" ");
-    let secondNameArray = second.name.split(" ");
-    if (/^Mr/.test(firstNameArray[0]) || /^Mrs/.test(firstNameArray[0])) {
-      firstLastName = firstNameArray[2];
-    }
-    else firstLastName = firstNameArray[1];
-    if (/^Mr/.test(secondNameArray[0]) || /^Mrs/.test(secondNameArray[0])) {
-      secondLastName = secondNameArray[2];
-    }
-    else secondLastName = secondNameArray[1];
-    return firstLastName.localeCompare(secondLastName, 'en', {sensitivity: 'base', ignorePunctuation: true});
-  }
-
-  const sortByUserName = (first, second) => {
-    return first.username.localeCompare(second.username, 'en', {sensitivity: 'base', ignorePunctuation: true});
-  }
 
   let userElements = filteredUsers.map((u, i) => (
     <li key={`user-${i}`} onClick={e => handleSelectUser(e, u.id)}>
@@ -116,7 +95,18 @@ export default function UserList(props) {
   
   return (
     <div className="user-list-container">
-      <UserSearchForm handleSubmit={setSearch} sortBy={sortBy} setSortBy={setSortBy} />
+      <div className="search-sort-container">
+        <UserSearchForm 
+          searchTerm={searchTerm}
+          handleSubmit={setSearchTerm} 
+          sortingMethod={sortingMethod} 
+          setSortingMethod={setSortingMethod} 
+        />
+        <SortingMethodSelector 
+          value={sortingMethod}
+          handleSelect={setSortingMethod}
+        />
+      </div>
       <ul className="user-list">
         {userElements}
       </ul>

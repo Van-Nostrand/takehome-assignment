@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import SearchTypeSelector from './SearchTypeSelector';
+import SortingMethodSelector from './SortingMethodSelector';
 
 export default function UserSearchForm(props) {
   const [ input, setInput ] = useState('');
@@ -9,18 +9,16 @@ export default function UserSearchForm(props) {
     e.preventDefault();
     props.handleSubmit(input);
   }
+
   return (
     <div className="user-search-form-container">
       <h1>Users</h1>
       <div className="user-search-form-container-inner">
-        <form className="user-search-form" onSubmit={handleSubmit}>
+        {/* <form className="user-search-form" onSubmit={handleSubmit}> */}
           <label htmlFor="name">Search</label>
-          <input name="name" value={input} onChange={e => setInput(e.target.value)} />
-        </form>
-        <SearchTypeSelector 
-          value={props.sortBy}
-          handleSelect={props.setSortBy}
-        />
+          <input name="name" value={props.searchTerm} onChange={e => props.handleSubmit(e.target.value)} />
+        {/* </form> */}
+        
       </div>
     </div>
   )
@@ -29,7 +27,7 @@ export default function UserSearchForm(props) {
 
 UserSearchForm.defaultProps = {
   handleSubmit: q => console.log("a parent has not passed a handleSubmit function to UserSearchForm. Query is ", q),
-  sortBy: 0,
-  setSortBy: () => console.log("a parent has not passed a setSortBy function to UserSearchForm")
+  sortingMethod: 0,
+  setSortingMethod: () => console.log("a parent has not passed a setSortingMethod function to UserSearchForm")
 
 }
