@@ -9,6 +9,7 @@ export default function SortingMethodSelector(props) {
         <option value="0">First Name</option>
         <option value="1">Last Name</option>
         <option value="2">Username</option>
+        <option value="3">Email</option>
       </select>
     </div>
   )

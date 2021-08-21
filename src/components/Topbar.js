@@ -10,8 +10,8 @@ export default function Topbar(props) {
         onChange={e => props.handleSelect(e.target.value)}
       >
         <option value="0">Userlist</option>
-        <option value="1">The wall</option>
-        <option value="2">User Profile</option>
+        {/* <option value="1">The wall</option>
+        <option value="2">User Profile</option> */}
       </select>
     </div>
   )

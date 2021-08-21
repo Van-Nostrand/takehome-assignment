@@ -17,31 +17,26 @@ import {
 } from './views';
 import { 
   fetchSomething
-} from './constants/apiCalls';
+} from './functions/apiCalls';
 
 import { useGetWindowSize } from './hooks/useGetWindowSize';
 
 export default function App() {
 
-  const [ users, setUsers ] = useState([]);
   const [ posts, setPosts ] = useState([]);
-  const [ loadingUsers, setLoadingUsers ] = useState(true);
   const [ loadingPosts, setLoadingPosts ] = useState(true);
   const [ view, setView ] = useState(0);
-  const [ selectedUserId, setSelectedUserId ] = useState(2);
   const [ selectedPostId, setSelectedPostId ] = useState(null);
   
   const windowSize = useGetWindowSize();
 
-  useEffect(() => {
-    
-    fetchSomething('users')
-      .then(u => {
-        setUsers(u);
-        setLoadingUsers(false);
-      });
-    
-  },[]);
+  // useEffect(() => {
+  //   fetchSomething('users')
+  //     .then(u => {
+  //       setUsers(u);
+  //       setLoadingUsers(false);
+  //     });
+  // },[]);
 
   // a lot of the post titles are super long gibberish, I found that annoying and added this
   const reformatPosts = (posts) => {
@@ -67,10 +62,8 @@ export default function App() {
 
   const renderSwitch = () => {
     switch(parseInt(view)) {
-      case 0: return <UserList users={users} selectUser={selectUser} /> 
-      case 1: return <Wall posts={posts} selectPost={selectPost} />
-      case 2: return <UserDetails profile={users.filter(u => u.id === selectedUserId)[0]} />
-      case 3: return <PostDetails post={posts.filter(p => p.id === selectedPostId)[0]} />
+      case 0: return <UserList selectUser={selectUser} /> 
+      // case 1: return <Wall selectPost={selectPost} />
       default: return <div>Error</div>
     }
   }
@@ -85,11 +78,7 @@ export default function App() {
       <div className="dashboard-inner">
         <Topbar value={view} handleSelect={setView} />
         <div className="dashboard-component-container">
-          { loadingUsers ? 
-            <LoadingDiv />
-            :
-            renderSwitch()
-          }
+          { renderSwitch() }
         </div>
       </div>
     </div>

@@ -6,16 +6,7 @@
 
   border: 2px solid green;
 
-
   @include mixins.respond(tab-port) {
     width: 85%;
-  }
-
-  div {
-    // font-size: vars.$bigger-font-size;
-  }
-
-  p {
-    // font-size: vars.$regular-font-size;
   }
 }

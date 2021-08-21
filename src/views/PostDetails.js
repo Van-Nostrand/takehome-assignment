@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LoadingDiv, Comment } from '../components';
-import { fetchPostComments } from '../constants/apiCalls';
+import { fetchPostComments } from '../functions/apiCalls';
 
 export default function PostDetails(props) {
 

@@ -2,52 +2,67 @@ import React, { useState, useEffect } from 'react';
 import {
   UserCard,
   UserSearchForm,
-  SortingMethodSelector
+  SortingMethodSelector,
+  UserDetails,
+  LoadingDiv,
 } from '../components';
 
 import { 
   sortByFirstName,
   sortByLastName,
   sortByUserName,
-  filterTitleFromName
-} from '../constants/sortingFunctions';
+  sortByEmail,
+  removeTitleFromName
+} from '../functions/sortingFunctions';
 
 
 export default function UserList(props) {
 
+  const [ users, setUsers ] = useState([]);
+  const [ loadingUsers, setLoadingUsers ] = useState(true);
+  const [ selectedUserId, setSelectedUserId ] = useState(null);
   const [ filteredUsers, setFilteredUsers ] = useState(props.users);
   const [ searchTerm, setSearchTerm ] = useState('');
   const [ sortingMethod, setSortingMethod ] = useState(0);
 
 
+  useEffect(() => {
+    fetchSomething('users')
+      .then(u => {
+        setUsers(u);
+        setLoadingUsers(false);
+      });
+  },[]);
+
   // handles searching
   useEffect(() => {
     if (searchTerm !== '') {
-      setFilteredUsers(fuzzySearchUsers(props.users, searchTerm));
+      setFilteredUsers(sortUsers(fuzzySearchUsers(users, searchTerm)));
     }
-    else setFilteredUsers([...props.users]);
+    else setFilteredUsers([...users]);
   },[searchTerm]);
 
+  
   // handles sorting
   useEffect(() => {
-    sortUsers([...filteredUsers]);
+    setFilteredUsers(sortUsers([...filteredUsers]));
   },[sortingMethod]);
 
 
   // filters out users based on searchTerm terms
   // Not using this anymore
-  const searchUsersByMethod = (userList) => {
-    const searchReg = new RegExp(`^${searchTerm.toLowerCase()}`);
-    // by case #: firstname lastname username
-    return userList.filter(u => {
-      switch(parseInt(sortingMethod)) {
-        case 0: return searchReg.test(filterTitleFromName(u.name).toLowerCase());
-        case 1: return searchReg.test(filterTitleFromName(u.name).toLowerCase().split(" ")[1]);
-        case 2: return searchReg.test(u.username.toLowerCase());
-        default: return searchReg.test(filterTitleFromName(u.name).toLowerCase());
-      }
-    })
-  }
+  // const searchUsersByMethod = (userList) => {
+  //   const searchReg = new RegExp(`^${searchTerm.toLowerCase()}`);
+  //   // by case #: firstname lastname username
+  //   return userList.filter(u => {
+  //     switch(parseInt(sortingMethod)) {
+  //       case 0: return searchReg.test(removeTitleFromName(u.name).toLowerCase());
+  //       case 1: return searchReg.test(removeTitleFromName(u.name).toLowerCase().split(" ")[1]);
+  //       case 2: return searchReg.test(u.username.toLowerCase());
+  //       default: return searchReg.test(removeTitleFromName(u.name).toLowerCase());
+  //     }
+  //   })
+  // }
 
 
   // matches users name, email, and username based on searchTerm term
@@ -71,7 +86,9 @@ export default function UserList(props) {
         return userList.sort(sortByLastName);  
       case 2: 
         return userList.sort(sortByUserName); 
-      default: console.log("there's an issue in the sortingMethod effect")
+      case 3:
+        return userList.sort(sortByEmail);
+      default: console.log("there's an issue while sorting users")
     }
   }
 
@@ -109,9 +126,13 @@ export default function UserList(props) {
           handleSelect={setSortingMethod}
         />
       </div>
-      <ul className="user-list">
-        {userElements}
-      </ul>
+      { loadingUsers ? 
+        <LoadingDiv />
+        :
+        <ul className="user-list">
+          {userElements} 
+        </ul>
+      }
     </div>
   )
 }

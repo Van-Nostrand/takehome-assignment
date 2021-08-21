@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { LoadingDiv, Post, UserDetailsSection } from '../components';
-import { fetchUsersItems } from '../constants/apiCalls';
+import { LoadingDiv, Post, UserDetailsSection } from '.';
+import { fetchUsersItems } from '../functions/apiCalls';
 
 export default function UserDetails(props) {
 
@@ -44,6 +44,7 @@ export default function UserDetails(props) {
         </UserDetailsSection> 
       </div>
            
+      <h2>{`Posts by ${name}`}</h2>
       <ul className="user-details-posts">
         { posts.length === 0 ? <LoadingDiv /> : postElements }
       </ul>

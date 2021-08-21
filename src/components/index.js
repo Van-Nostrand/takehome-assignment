@@ -1,6 +1,7 @@
 export { default as Post } from './Post';
 export { default as SortingMethodSelector } from './SortingMethodSelector';
 export { default as UserCard } from './UserCard';
+export { default as UserDetails } from './UserDetails';
 export { default as UserSearchForm } from './UserSearchForm';
 export { default as Topbar } from './Topbar';
 export { default as Sidebar } from './Sidebar';

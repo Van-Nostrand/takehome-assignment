@@ -1,6 +1,6 @@
 export const sortByFirstName = (first, second) => {
-  const firstName = filterTitleFromName(first.name);
-  const secondName = filterTitleFromName(second.name);
+  const firstName = removeTitleFromName(first.name);
+  const secondName = removeTitleFromName(second.name);
   return firstName.localeCompare(secondName, 'en', {sensitivity: 'base', ignorePunctuation: true});
 }
 
@@ -14,8 +14,12 @@ export const sortByUserName = (first, second) => {
   return first.username.localeCompare(second.username, 'en', {sensitivity: 'base', ignorePunctuation: true});
 }
 
-// deals with Mr, Mrs, Ms, and Miss
-export const filterTitleFromName = (name) => {
+export const sortByEmail = (first, second) => {
+  return first.email.localeCompare(second.email, 'en', {sensitivity: 'base', ignorePunctuation: true});
+}
+
+// removes Mr, Mrs, Ms, and Miss so that they aren't part of name comparison
+export const removeTitleFromName = (name) => {
   if (
     /^(mr(\.|\s){1})/.test(name.toLowerCase()) || 
     /^(mrs(\.|\s){1})/.test(name.toLowerCase()) || 
