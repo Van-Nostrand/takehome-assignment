@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
+
 import {
-  UserCard,
-  UserSearchForm,
-  SortingMethodSelector,
   UserDetails,
   LoadingDiv,
+  UserList,
 } from '../components';
 
 import { 
@@ -22,7 +22,7 @@ import {
 import { useAppState } from '../AppProvider';
 
 
-export default function UserList(props) {
+export default function Users(props) {
 
   const [ users, setUsers ] = useState([]);
   const [ loadingUsers, setLoadingUsers ] = useState(true);
@@ -30,11 +30,13 @@ export default function UserList(props) {
   const [ filteredUsers, setFilteredUsers ] = useState(props.users);
   const [ searchTerm, setSearchTerm ] = useState('');
   const [ sortingMethod, setSortingMethod ] = useState(0);
+  const [ userView, setUserView ] = useState(0);
 
+  // not sure if I want to use context or not
   const { state, dispatch } = useAppState();
 
 
-
+  // load users on mount
   useEffect(() => {
     fetchSomething('users')
       .then(u => {
@@ -43,6 +45,7 @@ export default function UserList(props) {
         dispatch({ type: 'load_users', users: u })
       });
   },[]);
+
 
   // handles searching
   useEffect(() => {
@@ -57,22 +60,6 @@ export default function UserList(props) {
   useEffect(() => {
     setFilteredUsers(sortUsers([...filteredUsers]));
   },[sortingMethod]);
-
-
-  // filters out users based on searchTerm terms
-  // Not using this anymore
-  // const searchUsersByMethod = (userList) => {
-  //   const searchReg = new RegExp(`^${searchTerm.toLowerCase()}`);
-  //   // by case #: firstname lastname username
-  //   return userList.filter(u => {
-  //     switch(parseInt(sortingMethod)) {
-  //       case 0: return searchReg.test(removeTitleFromName(u.name).toLowerCase());
-  //       case 1: return searchReg.test(removeTitleFromName(u.name).toLowerCase().split(" ")[1]);
-  //       case 2: return searchReg.test(u.username.toLowerCase());
-  //       default: return searchReg.test(removeTitleFromName(u.name).toLowerCase());
-  //     }
-  //   })
-  // }
 
 
   // matches users name, email, and username based on searchTerm term
@@ -105,49 +92,59 @@ export default function UserList(props) {
 
   const handleSelectUser = (e, id) => {
     e.stopPropagation();
-    props.selectUser(id)
+    setSelectedUserId(id)
+    setUserView(1);
+  }
+
+  const renderSwitch = () => {
+    switch(userView) {
+      case 0: {
+        return (
+          <UserList 
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            sortingMethod={sortingMethod}
+            setSortingMethod={setSortingMethod}
+            users={filteredUsers}
+            handleSelectUser={handleSelectUser}
+          />
+        )
+      }
+      case 1: {
+        return (
+          <UserDetails 
+            profile={users.filter(u => u.id === selectedUserId)[0]}
+          />
+        )
+      }
+    }
   }
 
 
-  let userElements = filteredUsers.map((u, i) => (
-    <li key={`user-${i}`} onClick={e => handleSelectUser(e, u.id)}>
-      <UserCard 
-        name={u.name}
-        username={u.username}
-        email={u.email}
-        id={u.id}
-      />
-    </li>
-  ))
-  
   return (
     <div className="user-list-container">
-      <h1>Users</h1>
-
-      <div className="search-sort-container">
-        <UserSearchForm 
-          searchTerm={searchTerm}
-          handleSubmit={setSearchTerm} 
-          sortingMethod={sortingMethod} 
-          setSortingMethod={setSortingMethod} 
-        />
-        <SortingMethodSelector 
-          value={sortingMethod}
-          handleSelect={setSortingMethod}
-        />
+      <div className="user-list-title">
+        <h3>Users</h3>
+        { selectedUserId !== null ? 
+          <div className="user-list-title-name">
+            &gt; {users.filter(u => u.id === selectedUserId)[0].name}
+          </div>
+          :
+          <></>
+        }
       </div>
+
       { loadingUsers ? 
         <LoadingDiv />
-        :
-        <ul className="user-list">
-          {userElements} 
-        </ul>
+        : 
+        renderSwitch()
       }
+
     </div>
   )
 }
 
-UserList.defaultProps = {
+Users.defaultProps = {
   users: [
     { 
       name: 'John Smith',

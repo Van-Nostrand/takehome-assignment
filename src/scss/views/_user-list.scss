@@ -4,6 +4,12 @@
 .user-list-container {
   width: 100%;
 
+  .user-list-title {
+    display: flex;
+    flex-flow: row;
+    
+  }
+
   .search-sort-container {
     display: flex;
     flex-flow: row;

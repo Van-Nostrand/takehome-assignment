@@ -36,6 +36,12 @@
 .user-details-section {
   &-title {
     font-size: vars.$large-font-size;
+  }
+}
 
+// italicizing the company motto
+.user-details-section-company {
+  div:nth-child(3) {
+    font-style: italic;
   }
 }

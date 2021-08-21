@@ -40,7 +40,7 @@ export default function UserDetails(props) {
         <UserDetailsSection sectionTitle="Company">
           <div>{company.name}</div>
           <div>{company.bs}</div>
-          <div style={{fontStyle: 'italic'}}>"{company.catchPhrase}"</div>
+          <div>"{company.catchPhrase}"</div>
         </UserDetailsSection> 
       </div>
            

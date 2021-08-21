@@ -10,10 +10,10 @@
 @use './components/sidebar';
 @use './components/post';
 @use './components/comment';
+@use './components/user-details';
 
 @use './views/user-list';
 @use './views/wall';
-@use './views/user-details';
 @use './views/post-details';
 
 

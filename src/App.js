@@ -10,7 +10,7 @@ import {
 } from './components';
 
 import {
-  UserList,
+  Users,
   Wall,
   UserDetails,
   PostDetails
@@ -19,7 +19,7 @@ import {
   fetchSomething
 } from './functions/apiCalls';
 
-import {AppProvider} from './AppProvider';
+import { AppProvider } from './AppProvider';
 import { useGetWindowSize } from './hooks/useGetWindowSize';
 
 export default function App() {
@@ -28,18 +28,6 @@ export default function App() {
   const [ selectedPostId, setSelectedPostId ] = useState(null);
   
   const windowSize = useGetWindowSize();
-
-  // a lot of the post titles are super long gibberish, I found that annoying and added this
-  // not being used anymore
-  // const reformatPosts = (posts) => {
-  //   let newposts = posts.map(p => {
-  //     let newTitle = p.title.split(" ");
-  //     if (newTitle.length > 4) { newTitle = newTitle.slice(0,3).join(" ")}
-  //     else newTitle = newTitle.join(" "); 
-  //     return ({...p, title: newTitle});
-  //   });
-  //   return newposts;
-  // }
 
   const selectUser = (id) => {
     setSelectedUserId(id);
@@ -54,7 +42,7 @@ export default function App() {
 
   const renderSwitch = () => {
     switch(parseInt(view)) {
-      case 0: return <UserList selectUser={selectUser} /> 
+      case 0: return <Users selectUser={selectUser} /> 
       // case 1: return <Wall selectPost={selectPost} />
       default: return <div>Error</div>
     }
