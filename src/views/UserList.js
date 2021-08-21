@@ -15,6 +15,12 @@ import {
   removeTitleFromName
 } from '../functions/sortingFunctions';
 
+import {
+  fetchSomething,
+} from '../functions/apiCalls';
+
+import { useAppState } from '../AppProvider';
+
 
 export default function UserList(props) {
 
@@ -25,22 +31,26 @@ export default function UserList(props) {
   const [ searchTerm, setSearchTerm ] = useState('');
   const [ sortingMethod, setSortingMethod ] = useState(0);
 
+  const { state, dispatch } = useAppState();
+
+
 
   useEffect(() => {
     fetchSomething('users')
       .then(u => {
         setUsers(u);
         setLoadingUsers(false);
+        dispatch({ type: 'load_users', users: u })
       });
   },[]);
 
   // handles searching
   useEffect(() => {
-    if (searchTerm !== '') {
+    if ( searchTerm !== '') {
       setFilteredUsers(sortUsers(fuzzySearchUsers(users, searchTerm)));
     }
     else setFilteredUsers([...users]);
-  },[searchTerm]);
+  },[users, searchTerm]);
 
   
   // handles sorting
