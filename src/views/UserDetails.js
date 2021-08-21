@@ -8,6 +8,7 @@ export default function UserDetails(props) {
 
   const { name, username, phone, website, email, company, address } = props.profile;
 
+  // load the users posts
   useEffect(() => {
     fetchUsersItems(props.profile.id, 'posts')
       .then(p => setPosts(p));

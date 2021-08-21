@@ -8,9 +8,15 @@ export default function UserCard(props) {
         <img src={props.photoUrl} />
       </div>
       <div className="user-card-info">
-        <div className="user-card-info-name">{props.name}</div>
-        <div className="user-card-info-user-name">"{props.username}"</div>
-        <a href={`mailto:${props.email}`} className="user-card-info-email">{props.email}</a>
+        <div className="user-card-info-name">
+          {props.name}
+        </div>
+        <div className="user-card-info-user-name">
+          "{props.username}"
+        </div>
+        <a href={`mailto:${props.email}`} className="user-card-info-email">
+          {props.email}
+        </a>
       </div>
     </div>
   )

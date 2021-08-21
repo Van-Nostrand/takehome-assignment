@@ -8,6 +8,7 @@
   display: flex;
   flex-flow: row;
   justify-content: flex-start;
+  
   border-radius: 1rem;
   
   background-color: vars.$slightly-grey;
@@ -30,18 +31,36 @@
   }
   &-info {
     position: relative;
-    // width: 85%;
+    width: 100%;
 
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-content: center;
 
     div {
       margin: 0.2rem 0;
     }
 
+    &-name {
+      grid-column: 1;
+      grid-row: 1;
+      align-self:flex-end;
+      height: min-content;
+    }
+
+    &-user-name {
+      grid-column: 1;
+      grid-row: 2;
+      height: min-content;
+    }
+
     &-email {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: center;
+      height: min-content;
+      
       color: vars.$email-blue;
     }
   }
