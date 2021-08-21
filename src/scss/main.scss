@@ -2,6 +2,7 @@
 @use './abstracts/mixins';
 
 @use './base/base';
+@use './base/typography';
 
 @use './components/user-card';
 @use './components/user-search-form';
@@ -54,7 +55,7 @@
 }
 
 .loading-div {
-  font-size: 35px;
+  // font-size: 35px;
   width: 50rem;
   height: 50rem;
 }

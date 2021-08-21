@@ -1,0 +1,42 @@
+@use '../abstracts/vars';
+@use '../abstracts/mixins';
+
+.loading-div {
+  font-size: 3.5rem;
+}
+
+.post {
+  font-size: vars.$regular-font-size;
+
+  div, a {
+    font-size: vars.$bigger-font-size;
+  }
+}
+
+.post-details {
+  &-title, &-body {
+    font-size: vars.$bigger-font-size;
+
+  }
+}
+
+.user-card {
+  font-size: vars.$regular-font-size;
+
+}
+
+.user-search-form-container {
+  font-size: 2rem;
+
+}
+
+.user-details {
+  font-size: vars.$regular-font-size;
+}
+
+.user-details-section {
+  &-title {
+    font-size: vars.$large-font-size;
+
+  }
+}

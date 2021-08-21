@@ -34,15 +34,7 @@ export default function App() {
   const windowSize = useGetWindowSize();
 
   useEffect(() => {
-    // Promise.all([
-    //   fetchSomething('users'),
-    //   fetchSomething('posts')
-    // ]).then(([userData, postData]) => {
-    //     setUsers(userData);
-    //     setPosts(postData);
-    //     setLoadingUsers(false);
-    //     setLoadingPosts(false);
-    //   });
+    
     fetchSomething('users')
       .then(u => {
         setUsers(u);
@@ -74,7 +66,6 @@ export default function App() {
 
 
   const renderSwitch = () => {
- 
     switch(parseInt(view)) {
       case 0: return <UserList users={users} selectUser={selectUser} /> 
       case 1: return <Wall posts={posts} selectPost={selectPost} />
@@ -83,6 +74,7 @@ export default function App() {
       default: return <div>Error</div>
     }
   }
+
   return(
     <div className="dashboard">
       { windowSize.width > 900 ?

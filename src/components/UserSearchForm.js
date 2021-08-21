@@ -12,7 +12,6 @@ export default function UserSearchForm(props) {
 
   return (
     <div className="user-search-form-container">
-      <h1>Users</h1>
       <div className="user-search-form-container-inner">
         {/* <form className="user-search-form" onSubmit={handleSubmit}> */}
           <label htmlFor="name">Search</label>

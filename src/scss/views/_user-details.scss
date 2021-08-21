@@ -8,7 +8,6 @@
   justify-content: start;
   align-items: flex-start;
 
-  font-size: vars.$regular-font-size;
 
   &-info {
     display: flex;
@@ -24,7 +23,6 @@
       }
 
       &-title {
-        font-size: vars.$large-font-size;
         margin-bottom: 1rem;
       }
       &-items > * {

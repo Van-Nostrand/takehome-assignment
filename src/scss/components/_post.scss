@@ -6,17 +6,17 @@
 
   border: 2px solid green;
 
-  font-size: vars.$regular-font-size;
+  // font-size: vars.$regular-font-size;
 
   @include mixins.respond(tab-port) {
     width: 85%;
   }
 
   div {
-    font-size: vars.$bigger-font-size;
+    // font-size: vars.$bigger-font-size;
   }
 
   p {
-    font-size: vars.$regular-font-size;
+    // font-size: vars.$regular-font-size;
   }
 }

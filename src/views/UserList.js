@@ -95,6 +95,8 @@ export default function UserList(props) {
   
   return (
     <div className="user-list-container">
+      <h1>Users</h1>
+
       <div className="search-sort-container">
         <UserSearchForm 
           searchTerm={searchTerm}
