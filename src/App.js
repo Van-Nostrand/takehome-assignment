@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { 
   Post, 
   UserCard,
@@ -33,39 +33,13 @@ import { useGetWindowSize } from './hooks/useGetWindowSize';
 export default function App() {
 
   const dispatch = useDispatch();
-  const { 
-    users, 
-    posts, 
-    loadingUsers, 
-    loadingPosts,
-  } = useSelector(state => state);
+  const { rootView } = useShallowEqual(state => state.rootState);
 
-  // } = useShallowEqual(state => state.appContext);
-
-  // const [ users, setUsers ] = useState([]);
-  // const [ posts, setPosts ] = useState([]);
-  // const [ loadingUsers, setLoadingUsers ] = useState(true);
-  // const [ loadingPosts, setLoadingPosts ] = useState(true);
-  const [ view, setView ] = useState(1);
+  const [ view, setView ] = useState(0);
   const [ selectedUserId, setSelectedUserId ] = useState(2);
   const [ selectedPostId, setSelectedPostId ] = useState(null);
   
   const windowSize = useGetWindowSize();
-
-  useEffect(() => {
-    // Promise.all([
-    //   fetchSomething('users'),
-    //   fetchSomething('posts')
-    // ]).then(([userData, postData]) => {
-    //     dispatch(basicSetState({
-    //       users: userData,
-    //       posts: postData,
-    //       loadingUsers: false,
-    //       loadingPosts: false
-    //     }))
-    //   });
-    dispatch(loadUsersAndPosts());
-  },[]);
 
   // a lot of the post titles are super long gibberish, I found that annoying and added this
   const reformatPosts = (posts) => {
@@ -95,16 +69,20 @@ export default function App() {
 
   const renderSwitch = () => {
  
-    switch(parseInt(view)) {
-      case 0: return <UserList users={users} selectUser={selectUser} /> 
-      case 1: return <Wall posts={posts} selectPost={selectPost} />
-      case 2: return <UserDetails profile={users.filter(u => u.id === selectedUserId)[0]} />
-      case 3: return <PostDetails post={posts.filter(p => p.id === selectedPostId)[0]} />
+    switch(parseInt(rootView)) {
+      case 0: return <UserList /> 
+      case 1: return <Wall />
+      // case 2: return <UserDetails profile={[]} />
+      // case 3: return <PostDetails post={[]} />
       default: return <div>Error</div>
     }
   }
 
-  console.log('src/App.js: loadingUsers is ', loadingUsers);
+  // console.log('src/App.js: loadingUsers is ', loadingUsers);
+
+  const handleSelectRootView = (v) => {
+    dispatch({ type: 'SET_ROOT_VIEW', rootView: v });
+  }
 
   return(
     <div className="dashboard">
@@ -114,14 +92,15 @@ export default function App() {
         <></>
       }
       <div className="dashboard-inner">
-        <Topbar value={view} handleSelect={setView} />
+        <Topbar value={rootView} handleSelect={handleSelectRootView} />
         <div className="dashboard-component-container">
           {/* { loadingPosts || loadingUsers ?  */}
-          { posts.length === 0 || users.length === 0 ? 
+          {/* { posts.length === 0 || users.length === 0 ? 
             <LoadingDiv />
             :
             renderSwitch()
-          }
+          } */}
+          {renderSwitch()}
         </div>
       </div>
     </div>

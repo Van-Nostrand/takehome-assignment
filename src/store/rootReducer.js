@@ -1,36 +1,17 @@
 import { initialState } from './initialState';
+import { combineReducers } from 'redux';
+import userlist from './userlist/reducer';
+import wall from './wall/reducer';
 
-function rootReducer(state = initialState, action) {
+function rootState(state = initialState, action) {
   switch(action.type) {
-    case 'REQUESTING_USERS': 
-      return {
-        ...state, 
-        loadingUsers: true 
-      }
-    case 'LOAD_USERS':
-      return { 
-        ...state, 
-        users: action.users,
-        loadingUsers: false
-      }
-    case 'REQUESTING_POSTS':
-      return { 
-        ...state, 
-        loadingPosts: true,
-      }
-    case 'LOAD_POSTS':
+    case 'SET_ROOT_VIEW':
       return {
         ...state,
-        posts: action.posts,
-        loadingPosts: false
-      }
-    case 'BASIC_SET_STATE':
-      return {
-        ...state,
-        ...action.payload
+        rootView: action.rootView
       }
     default: return state;
   }
 }
 
-export default rootReducer;
+export default combineReducers({ rootState, userlist, wall });

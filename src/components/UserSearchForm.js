@@ -1,14 +1,22 @@
 import React, {useState} from 'react'
 import SearchTypeSelector from './SearchTypeSelector';
+import { useShallowEqual } from '../hooks/useShallowEqual';
+
+import { useDispatch } from 'react-redux';
+import { setSearchTerm, setSortingMethod } from '../store/userlist/actions';
 
 export default function UserSearchForm(props) {
+  const dispatch = useDispatch();
+
   const [ input, setInput ] = useState('');
   
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.handleSubmit(input);
+    dispatch(setSearchTerm(input));
   }
+
+
   return (
     <div className="user-search-form-container">
       <h1>Users</h1>
@@ -17,10 +25,6 @@ export default function UserSearchForm(props) {
           <label htmlFor="name">Search</label>
           <input name="name" value={input} onChange={e => setInput(e.target.value)} />
         </form>
-        <SearchTypeSelector 
-          value={props.sortBy}
-          handleSelect={props.setSortBy}
-        />
       </div>
     </div>
   )
