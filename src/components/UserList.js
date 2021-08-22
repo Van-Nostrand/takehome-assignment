@@ -2,21 +2,28 @@ import React from 'react';
 import { 
   UserCard,
   UserSearchForm,
-  SortingMethodSelector
+  UserSortingMethodSelector
 } from './index';
 
 export default function UserList(props) {
 
-  const userElements = props.users.map((u, i) => (
-    <li key={`user-${i}`} onClick={e => props.handleSelectUser(e, u.id)}>
-      <UserCard 
-        name={u.name}
-        username={u.username}
-        email={u.email}
-        id={u.id}
-      />
-    </li>
-  ))
+  const renderUsers = () => {
+    return (
+      props.users.map((u, i) => (
+        <li 
+          key={`user-${i}`} 
+          onClick={e => props.handleSelectUser(e, u.id)}
+        >
+          <UserCard 
+            name={u.name}
+            username={u.username}
+            email={u.email}
+            id={u.id}
+          />
+        </li>
+      ))
+    )
+  }
 
   return (
     <>
@@ -27,13 +34,13 @@ export default function UserList(props) {
           sortingMethod={props.sortingMethod} 
           setSortingMethod={props.setSortingMethod} 
         />
-        <SortingMethodSelector 
+        <UserSortingMethodSelector 
           value={props.sortingMethod}
           handleSelect={props.setSortingMethod}
         />
       </div>
       <ul className="user-list">
-        {userElements} 
+        { renderUsers() } 
       </ul>
     </>
   )

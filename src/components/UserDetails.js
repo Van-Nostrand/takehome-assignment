@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { LoadingDiv, Post, UserDetailsSection } from '.';
+import { 
+  LoadingDiv, 
+  Post, 
+  UserDetailsSection, 
+  UserPostsSection 
+} from '.';
 import { fetchUsersItems } from '../functions/apiCalls';
 
 export default function UserDetails(props) {
@@ -7,17 +12,12 @@ export default function UserDetails(props) {
   const [ posts, setPosts ] = useState([]);
 
   const { name, username, phone, website, email, company, address } = props.profile;
-
+  
   // load the users posts
   useEffect(() => {
     fetchUsersItems(props.profile.id, 'posts')
-      .then(p => setPosts(p));
+    .then(p => setPosts(p));
   },[]);
-
-  let postElements = [];
-  if (posts.length > 0) {
-    postElements = posts.map(post => <Post key={`userpost-${post.id}`} post={post} />)
-  }
 
   return (
     <div className="user-details">
@@ -31,9 +31,9 @@ export default function UserDetails(props) {
         </UserDetailsSection>
 
         <UserDetailsSection sectionTitle="Address">
-          <div>{address.city}</div>
           <div>{address.street}</div>
           <div>{address.suite}</div>
+          <div>{address.city}</div>
           <div>{address.zipcode}</div>
         </UserDetailsSection>
           
@@ -44,10 +44,10 @@ export default function UserDetails(props) {
         </UserDetailsSection> 
       </div>
            
-      <h2>{`Posts by ${name}`}</h2>
-      <ul className="user-details-posts">
-        { posts.length === 0 ? <LoadingDiv /> : postElements }
-      </ul>
+      <UserPostsSection 
+        name={name}
+        posts={posts}
+      />
     </div>
   )
 }

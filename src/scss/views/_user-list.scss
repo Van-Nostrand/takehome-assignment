@@ -4,15 +4,75 @@
 .user-list-container {
   width: 100%;
 
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 8rem auto;
+
+  @include mixins.respond(tab-port) {
+    display: flex;
+    flex-flow: column;
+    
+  }
+
   .user-list-title {
+    grid-row: 1;
+    grid-column: 1;
+    margin-left: 2rem;
+
     display: flex;
     flex-flow: row;
+    align-items: center;
+
+    @include mixins.respond(tab-port) {
+      margin-left: 1rem;
+    }
+
+    &-header {
+      cursor: pointer;
+    }
     
   }
 
   .search-sort-container {
+    grid-column: 2;
+    grid-row: 1;
+    margin-right: 2rem;
+
+
     display: flex;
     flex-flow: row;
     justify-content: end;
+    align-items: center;
+
+    @include mixins.respond(tab-port) {
+      margin-right: 0;
+      margin-left: 1rem;
+
+      @include mixins.flexColLeft();
+      justify-content: center;
+
+    }
+
+    .user-search-form-container {
+
+    }
+
+    .search-by-what {
+      margin-left: 1rem;
+
+      @include mixins.respond(tab-port) {
+        margin: 0.4rem 0;
+        display: flex;
+        flex-flow: column;
+
+        // // label and select element seemed misaligned
+        // label { margin-top: 0.3rem; }
+      }
+    }
+  }
+
+  .user-list, .user-details {
+    grid-column: 1 / span 2;
+    grid-row: 2;
   }
 }

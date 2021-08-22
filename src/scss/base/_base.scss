@@ -1,4 +1,5 @@
 @use '../abstracts/vars';
+@use '../abstracts/mixins';
 
 *,
 *::after,
@@ -11,6 +12,10 @@
 html {
   font-size: 62.5%;
   font-family: Helvetica, sans-serif;
+
+  @include mixins.respond(phone) {
+    font-size: 57%;
+  }
 }
 
 li {

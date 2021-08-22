@@ -11,7 +11,7 @@ export default function Post(props) {
   
   return (
     <li className="post" onClick={handleClick}>
-      <div>{title}</div>
+      <div className="post-title">{title}</div>
       <p>{body}</p>
     </li>
   )

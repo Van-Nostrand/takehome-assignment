@@ -1,8 +1,10 @@
 export { default as Post } from './Post';
-export { default as SortingMethodSelector } from './SortingMethodSelector';
+export { default as PostDetails } from './PostDetails';
+export { default as UserSortingMethodSelector } from './UserSortingMethodSelector';
 export { default as UserCard } from './UserCard';
 export { default as UserDetails } from './UserDetails';
 export { default as UserList } from './UserList';
+export { default as UserPostsSection } from './UserPostsSection';
 export { default as UserSearchForm } from './UserSearchForm';
 export { default as Topbar } from './Topbar';
 export { default as Sidebar } from './Sidebar';

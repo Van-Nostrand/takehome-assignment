@@ -12,7 +12,6 @@ import {
   sortByLastName,
   sortByUserName,
   sortByEmail,
-  removeTitleFromName
 } from '../functions/sortingFunctions';
 
 import {
@@ -29,6 +28,7 @@ export default function Users(props) {
   const [ selectedUserId, setSelectedUserId ] = useState(null);
   const [ filteredUsers, setFilteredUsers ] = useState(props.users);
   const [ searchTerm, setSearchTerm ] = useState('');
+  // 0 sorts by first name, 1 by last name, 2 by username, and 3 by email
   const [ sortingMethod, setSortingMethod ] = useState(0);
   const [ userView, setUserView ] = useState(0);
 
@@ -40,7 +40,7 @@ export default function Users(props) {
   useEffect(() => {
     fetchSomething('users')
       .then(u => {
-        setUsers(u);
+        setUsers(sortUsers(u));
         setLoadingUsers(false);
         dispatch({ type: 'load_users', users: u })
       });
@@ -96,6 +96,14 @@ export default function Users(props) {
     setUserView(1);
   }
 
+  // clicking this will return to the main user list view
+  const handleUserTitleClick = () => {
+    if (userView !== 0) {
+      setUserView(0);
+      setSelectedUserId(null);
+    }
+  }
+
   const renderSwitch = () => {
     switch(userView) {
       case 0: {
@@ -124,10 +132,15 @@ export default function Users(props) {
   return (
     <div className="user-list-container">
       <div className="user-list-title">
-        <h3>Users</h3>
+        <div 
+          className={`user-list-title-header${userView !== 0 ? ' user-list-title-selected' : ''}`} 
+          onClick={handleUserTitleClick}
+        >
+          Users
+        </div>
         { selectedUserId !== null ? 
           <div className="user-list-title-name">
-            &gt; {users.filter(u => u.id === selectedUserId)[0].name}
+            &nbsp; &gt; {users.filter(u => u.id === selectedUserId)[0].name}
           </div>
           :
           <></>

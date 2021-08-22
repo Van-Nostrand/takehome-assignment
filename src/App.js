@@ -29,10 +29,11 @@ export default function App() {
   
   const windowSize = useGetWindowSize();
 
-  const selectUser = (id) => {
-    setSelectedUserId(id);
-    setView(2);
-  }
+
+  // const selectUser = (id) => {
+  //   setSelectedUserId(id);
+  //   setView(2);
+  // }
 
   const selectPost = (id) => {
     setSelectedPostId(id);
@@ -42,7 +43,7 @@ export default function App() {
 
   const renderSwitch = () => {
     switch(parseInt(view)) {
-      case 0: return <Users selectUser={selectUser} /> 
+      case 0: return <Users /> 
       // case 1: return <Wall selectPost={selectPost} />
       default: return <div>Error</div>
     }

@@ -19,3 +19,9 @@
   flex-flow: column;
   align-items: flex-start;
 }
+
+@mixin flexColRight() {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+}

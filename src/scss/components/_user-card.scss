@@ -14,6 +14,10 @@
   cursor: pointer;
   background-color: vars.$slightly-grey;
 
+  @include mixins.respond(tab-port) {
+    height: 8rem;
+  }
+
   &-photo {
     position: relative;
     width: 15%;
@@ -23,7 +27,7 @@
     align-items: center;
 
     @include mixins.respond(tab-port) {
-      width: 30%;
+      width: 25%;
     }
 
     img {
@@ -39,6 +43,12 @@
     grid-template-rows: 1fr 1fr;
     align-content: center;
 
+    @include mixins.respond(tab-port) {
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+    }
+
     div {
       margin: 0.2rem 0;
     }
@@ -48,6 +58,10 @@
       grid-row: 1;
       align-self:flex-end;
       height: min-content;
+
+      @include mixins.respond(tab-port) {
+        align-self: unset;
+      }
     }
 
     &-user-name {
@@ -61,6 +75,10 @@
       grid-row: 1 / span 2;
       align-self: center;
       height: min-content;
+
+      @include mixins.respond(tab-port) {
+        align-self: unset;
+      }
       
       // color: vars.$email-blue;
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LoadingDiv, Comment } from '../components';
+import { LoadingDiv, Comment } from '.';
 import { fetchPostComments } from '../functions/apiCalls';
 
 export default function PostDetails(props) {
@@ -11,9 +11,10 @@ export default function PostDetails(props) {
       .then(c => setComments(c));
   },[]);
 
-  let allComments;
-  if (comments.length > 0) {
-    allComments = comments.map((c,i) => <Comment key={`comment-${i}`} comment={c} />)
+  const renderComments = () => {
+    return (
+      comments.map((c,i) => <Comment key={`comment-${i}`} comment={c} />)
+    )
   }
 
 
@@ -22,10 +23,10 @@ export default function PostDetails(props) {
       <div className="post-details-title">{props.post.title}</div>
       <div className="post-details-body">{props.post.body}</div>
       <div className="post-details-comments">
-        { comments.length === 0 ? 
-          <LoadingDiv />
+        { comments.length > 0 ? 
+          renderComments()
           :
-          allComments
+          <LoadingDiv />
         }
       </div>
     </div>

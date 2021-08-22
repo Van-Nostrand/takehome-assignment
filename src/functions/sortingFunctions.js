@@ -20,12 +20,7 @@ export const sortByEmail = (first, second) => {
 
 // removes Mr, Mrs, Ms, and Miss so that they aren't part of name comparison
 export const removeTitleFromName = (name) => {
-  if (
-    /^(mr(\.|\s){1})/.test(name.toLowerCase()) || 
-    /^(mrs(\.|\s){1})/.test(name.toLowerCase()) || 
-    /^(ms(\.|\s){1})/.test(name.toLowerCase()) || 
-    /^(miss(\.|\s){1})/.test(name.toLowerCase())
-  ){
+  if (/^(mr(\.|\s){1}|mrs(\.|\s){1}|ms(\.|\s){1}|miss(\.|\s){1})/i.test(name)) {
     return name.split(" ").slice(1).join(" ");
   }
   else return name;

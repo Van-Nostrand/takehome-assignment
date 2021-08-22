@@ -1,6 +1,11 @@
 @use '../abstracts/vars';
 @use '../abstracts/mixins';
 
+.dashboard {
+  font-size: vars.$regular-font-size;
+  color: vars.$almost-black;
+}
+
 .loading-div {
   font-size: 3.5rem;
 }
@@ -21,12 +26,10 @@
 
 .user-card {
   font-size: vars.$regular-font-size;
-
 }
 
 .user-search-form-container {
   font-size: 2rem;
-
 }
 
 .user-details {
@@ -37,6 +40,15 @@
   &-title {
     font-size: vars.$large-font-size;
   }
+}
+
+div[class$="-title"] {
+  font-size: vars.$large-font-size;
+  font-weight: 600;
+}
+
+.user-list-title-selected {
+  color: vars.$email-blue;
 }
 
 // italicizing the company motto
