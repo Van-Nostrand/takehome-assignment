@@ -1,6 +1,6 @@
 @use '../abstracts/vars';
 @use '../abstracts/mixins';
-
+@use 'sass:math';
 
 .topbar {
   position: relative;
@@ -9,11 +9,11 @@
   
   flex-shrink: 0; 
   
-  background-color: red;
+  background-color: vars.$blue-alt;
 
   @include mixins.respond(tab-port) {
     position: fixed;
-    height: vars.$topbar-height / 2;
+    height: math.div(vars.$topbar-height, 2);
     // top: vars.$dashboard-padding;
     // width: calc(100% - #{vars.$dashboard-padding});
   }

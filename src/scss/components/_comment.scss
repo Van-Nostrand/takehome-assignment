@@ -1,7 +1,8 @@
+@use '../abstracts/vars';
 
 .comment {
   margin: 2rem;
   padding: 1rem;
-  border: 1px solid black;
+  border: 1px solid vars.$almost-black;
   border-radius: 1rem;
 }

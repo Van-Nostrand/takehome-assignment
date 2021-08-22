@@ -11,7 +11,6 @@
   @include mixins.respond(tab-port) {
     display: flex;
     flex-flow: column;
-    
   }
 
   .user-list-title {

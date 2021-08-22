@@ -19,6 +19,7 @@ export default function UserDetails(props) {
     .then(p => setPosts(p));
   },[]);
 
+
   return (
     <div className="user-details">
       <div className="user-details-info">
@@ -26,8 +27,8 @@ export default function UserDetails(props) {
           <div>{name}</div>
           <div>{username}</div>
           <div>{phone}</div>
-          <a href={website}>{website}</a>
-          <a href={`mailto:${email}`}>{email}</a>
+          <a href={`http://${website}`} target="_blank" rel="noopener noreferrer">{website}</a>
+          <a href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">{email}</a>
         </UserDetailsSection>
 
         <UserDetailsSection sectionTitle="Address">

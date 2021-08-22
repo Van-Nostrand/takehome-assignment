@@ -6,13 +6,13 @@
   // 100 - .user-details pad * 2, .post pad, .post margin
   // width: calc(33% - )
   width: calc(33% - 4rem);
-  border: 1px solid green;
+  border: 1px solid vars.$almost-black;
 
   padding: 2rem;
   margin: 2rem;
 
   @include mixins.respond(tab-port) {
-    width: 100%;
+    width: 100vw;
     margin: 0;
     padding: 2rem 1rem;
   }
@@ -22,13 +22,14 @@
   }
 
   p {
-    margin-left: 1rem;
+    // margin-left: 1rem;
+    margin-top: 1rem;
 
     @include mixins.respond(tab-port){
       max-width: 95%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      // white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
     }
   }
 }

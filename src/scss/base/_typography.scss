@@ -45,6 +45,7 @@
 div[class$="-title"] {
   font-size: vars.$large-font-size;
   font-weight: 600;
+  // color: vars.$email-blue;
 }
 
 .user-list-title-selected {
@@ -56,4 +57,8 @@ div[class$="-title"] {
   div:nth-child(3) {
     font-style: italic;
   }
+}
+
+.user-details-posts-title {
+  color: vars.$email-blue;
 }
