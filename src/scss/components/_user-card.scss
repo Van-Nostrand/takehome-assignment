@@ -76,6 +76,8 @@
       align-self: center;
       height: min-content;
 
+      z-index: 10;
+
       @include mixins.respond(tab-port) {
         align-self: unset;
       }

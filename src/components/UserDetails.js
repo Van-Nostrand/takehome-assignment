@@ -7,6 +7,8 @@ import {
 } from '.';
 import { fetchUsersItems } from '../functions/apiCalls';
 
+const extRegex = /(\sx){1}/;
+
 export default function UserDetails(props) {
 
   const [ posts, setPosts ] = useState([]);
@@ -19,23 +21,28 @@ export default function UserDetails(props) {
     .then(p => setPosts(p));
   },[]);
 
+  // parse extension from phone numbers which have one
+  const phoneString = extRegex.test(phone) ? 
+    (() => {
+      const [num, ex] = phone.split(" x");
+      return `tel:${num},${ex}`;
+    })()
+    :
+    `tel:${phone}`;
+
 
   return (
     <div className="user-details">
       <div className="user-details-info">
         <UserDetailsSection sectionTitle="Contact Info">
-          <div>{name}</div>
-          <div>{username}</div>
-          <div>{phone}</div>
-          <a href={`http://${website}`} target="_blank" rel="noopener noreferrer">{website}</a>
-          <a href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">{email}</a>
+          <div>Username: {username}</div>
+          <div>Email: <a href={`mailto:${email}`}>{email}</a></div>
+          <div>Phone: <a href={phoneString} target="_blank" rel="nofollow external">{phone}</a></div>
+          <div>Website: <a href={`http://${website}`} target="_blank" rel="external noopener noreferrer">{website}</a></div>
         </UserDetailsSection>
 
         <UserDetailsSection sectionTitle="Address">
-          <div>{address.street}</div>
-          <div>{address.suite}</div>
-          <div>{address.city}</div>
-          <div>{address.zipcode}</div>
+          <div>{address.suite} {address.street}, {address.city}, {address.zipcode}</div>
         </UserDetailsSection>
           
         <UserDetailsSection sectionTitle="Company">

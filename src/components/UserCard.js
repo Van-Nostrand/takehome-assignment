@@ -14,7 +14,11 @@ export default function UserCard(props) {
         <div className="user-card-info-user-name">
           "{props.username}"
         </div>
-        <a href={`mailto:${props.email}`} className="user-card-info-email">
+        <a 
+          className="user-card-info-email" 
+          href={`mailto:${props.email}`} 
+          onClick={e => e.stopPropagation()}
+        >
           {props.email}
         </a>
       </div>
