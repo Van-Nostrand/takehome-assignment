@@ -5,17 +5,33 @@ import {
   UserDetailsSection, 
   UserPostsSection 
 } from '.';
-import { fetchUsersItems } from '../functions/apiCalls';
+import { fetchUsersItems, fetchUserInfo } from '../functions/apiCalls';
 
 const extRegex = /(\sx){1}/;
 
 export default function UserDetails(props) {
 
   const [ posts, setPosts ] = useState([]);
+  const [ userData, setUserData ] = useState({});
   const { name, username, phone, website, email, company, address } = props.profile;
   
   // load the users posts
   useEffect(() => {
+
+    // Promise.all([
+    //   fetchUserInfo(props.profile.id),
+    //   fetchUsersItems(props.profile.id, 'posts')
+    // ])
+    //   .then(([userInfoData, userPostsData]) => {
+    //     if (userPostsData === undefined || userPostsData.length === 0) {
+    //       setPosts(null);
+    //       setUserData({...userInfoData});
+    //     }
+    //     else {
+    //       setPosts(userPostsData);
+    //       setUserData({...userInfoData});
+    //     }
+    //   });
     fetchUsersItems(props.profile.id, 'posts')
       .then(p => {
         // check that the user has actually created posts

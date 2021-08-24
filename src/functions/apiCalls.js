@@ -14,6 +14,10 @@ export function fetchPostComments(postId) {
   return fetch(`${ROOT_URL}/posts/${postId}/comments`).then(res => res.json());
 }
 
+export function fetchUserInfo(userId) {
+  return fetch(`${ROOT_URL}/users/${userId}`).then(res => res.json());
+}
+
 
 /////////////////////////////////
 //  for reference 
