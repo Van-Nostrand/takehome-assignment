@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
-    publicPath: "/",
+    publicPath: "auto",
     assetModuleFilename: 'images/[hash]-[name].[ext]'
   },
   target: ['web','es6'],
