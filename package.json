@@ -1,7 +1,7 @@
 {
   "name": "assignment",
   "version": "1.0.0",
-  "description": "",
+  "description": "A dashboard to view information about various users",
   "main": "index.js",
   "engines": {
     "npm": ">=7.0.0"
