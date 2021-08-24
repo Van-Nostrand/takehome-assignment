@@ -12,13 +12,20 @@ const extRegex = /(\sx){1}/;
 export default function UserDetails(props) {
 
   const [ posts, setPosts ] = useState([]);
-
   const { name, username, phone, website, email, company, address } = props.profile;
   
   // load the users posts
   useEffect(() => {
     fetchUsersItems(props.profile.id, 'posts')
-    .then(p => setPosts(p));
+      .then(p => {
+        // check that the user has actually created posts
+        if (p === undefined || p.length === 0){
+          setPosts(null);
+        }
+        else {
+          setPosts(p)
+        }
+      });
   },[]);
 
   // parse extension from phone numbers which have one
@@ -34,6 +41,7 @@ export default function UserDetails(props) {
   return (
     <div className="user-details">
       <div className="user-details-info">
+
         <UserDetailsSection sectionTitle="Contact Info">
           <div>Username: {username}</div>
           <div>Email: <a href={`mailto:${email}`}>{email}</a></div>
@@ -59,6 +67,7 @@ export default function UserDetails(props) {
     </div>
   )
 }
+
 
 UserDetails.defaultProps = {
   profile: { 

@@ -1,9 +1,11 @@
 import React from 'react';
 import DefaultUserIcon from '../assets/user-icon.png';
 
+// a small box that briefly describes a user
+// appears in the list of users
 export default function UserCard(props) {
   return (
-    <div className="user-card">
+    <li className="user-card" onClick={props.handleSelectUser}>
       <div className="user-card-photo">
         <img src={props.photoUrl} />
       </div>
@@ -22,7 +24,7 @@ export default function UserCard(props) {
           {props.email}
         </a>
       </div>
-    </div>
+    </li>
   )
 }
 

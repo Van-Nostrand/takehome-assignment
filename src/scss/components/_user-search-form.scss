@@ -19,18 +19,27 @@
 
     display: flex;
     flex-flow: row;
+    justify-content: space-around;
 
     @include mixins.respond(tab-port) {
       flex-flow: column;
     }
 
-    .user-search-form {
-      @include mixins.flexColLeft();
-    }
+    // label {
+    //   margin-right: 1rem;
+
+    //   @include mixins.respond(tab-port) {
+    //     margin-right: unset;
+    //   }
+    // }
+
+    // .user-search-form {
+    //   @include mixins.flexColLeft();
+    // }
     
-    .search-by-what {
-      @include mixins.flexColLeft();
-    }
+    // .search-by-what {
+    //   @include mixins.flexColLeft();
+    // }
 
   }
 

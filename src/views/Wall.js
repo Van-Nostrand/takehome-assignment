@@ -1,6 +1,8 @@
 import React from 'react';
 import { Post, LoadingDiv } from '../components';
 
+
+// saw an opportunity for a "post feed" or wall, but decided to stick to the instructions
 export default function Wall(props) {
 
   const renderPosts = () => {

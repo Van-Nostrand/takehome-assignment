@@ -1,3 +1,4 @@
+// functions and references for api calls
 
 const ROOT_URL = 'https://jsonplaceholder.typicode.com';
 

@@ -6,15 +6,24 @@
   position: relative;
   width: 100%;
   height: vars.$topbar-height;
-  
-  flex-shrink: 0; 
+
+  display: flex; 
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: center;
   
   background-color: vars.$blue-alt;
 
   @include mixins.respond(tab-port) {
     position: fixed;
     height: math.div(vars.$topbar-height, 2);
-    // top: vars.$dashboard-padding;
-    // width: calc(100% - #{vars.$dashboard-padding});
+  }
+
+  h1 {
+    margin-left: 2rem;
+
+    @include mixins.respond(tab-port) {
+      margin-left: 1rem;
+    }
   }
 }

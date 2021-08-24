@@ -1,3 +1,5 @@
+// array sorting functions
+
 export const sortByFirstName = (first, second) => {
   const firstName = removeTitleFromName(first.name);
   const secondName = removeTitleFromName(second.name);

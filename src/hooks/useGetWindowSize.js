@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+// returns an object describing the size of the browser window
 export function useGetWindowSize() {
   let [ windowSize, setWindowSize ] = useState({
     width: undefined,

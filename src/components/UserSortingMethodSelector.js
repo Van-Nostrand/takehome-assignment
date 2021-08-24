@@ -1,11 +1,23 @@
 import React from 'react';
 
+import { useGetWindowSize } from '../hooks/useGetWindowSize';
+
+// a drop down selector that triggers different user sorting methods
 export default function UserSortingMethodSelector(props) {
+
+  // const windowSize = useGetWindowSize();
 
   return (
     <div className="search-by-what">
-      <label htmlFor="fl-selector">Sort By</label>
-      <select name="fl-selector" className="search-by-what-selector" value={props.value} onChange={e => props.handleSelect(e.target.value)}>
+      <label htmlFor="fl-selector">
+          Sort By
+      </label>
+      <select 
+        name="fl-selector" 
+        className="search-by-what-selector" 
+        value={props.value} 
+        onChange={e => props.handleSelect(e.target.value)}
+      >
         <option value="0">First Name</option>
         <option value="1">Last Name</option>
         <option value="2">Username</option>

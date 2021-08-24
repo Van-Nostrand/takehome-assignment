@@ -5,7 +5,7 @@
   width: 100%;
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   grid-template-rows: 8rem auto;
 
   @include mixins.respond(tab-port) {
@@ -15,7 +15,7 @@
 
   .user-list-title {
     grid-row: 1;
-    grid-column: 1;
+    grid-column: 1 / span 2;
     margin-left: 2rem;
 
     display: flex;
@@ -52,10 +52,7 @@
 
     }
 
-    .user-search-form-container {
-
-    }
-
+    // bad name, consider changing
     .search-by-what {
       margin-left: 1rem;
 
@@ -63,9 +60,6 @@
         margin: 0.4rem 0;
         display: flex;
         flex-flow: column;
-
-        // // label and select element seemed misaligned
-        // label { margin-top: 0.3rem; }
       }
     }
   }

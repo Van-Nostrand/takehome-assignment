@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoadingDiv, Post } from '.';
 
-
+// renders all of a users posts in the user details component
 export default function UserPostsSection(props) {
 
   const renderPosts = () => {
@@ -14,10 +14,13 @@ export default function UserPostsSection(props) {
         {`Posts by ${props.name}`}
       </h2>
       <ul className="user-details-posts-list">
-        { props.posts.length > 0 ? 
-          renderPosts()
-          : 
-          <LoadingDiv /> 
+        { props.posts === null ? 
+          <div>this user has not created any posts</div>
+          :
+            props.posts.length > 0 ? 
+            renderPosts()
+            : 
+            <LoadingDiv /> 
         }
       </ul>
     </div>

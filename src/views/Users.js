@@ -18,9 +18,8 @@ import {
   fetchSomething,
 } from '../functions/apiCalls';
 
-import { useAppState } from '../AppProvider';
 
-
+// the "Users" view. Displays a list of all users or details about one selected user
 export default function Users(props) {
 
   const [ users, setUsers ] = useState([]);
@@ -32,9 +31,6 @@ export default function Users(props) {
   const [ sortingMethod, setSortingMethod ] = useState(0);
   const [ userView, setUserView ] = useState(0);
 
-  // not sure if I want to use context or not
-  const { state, dispatch } = useAppState();
-
 
   // load users on mount
   useEffect(() => {
@@ -42,7 +38,6 @@ export default function Users(props) {
       .then(u => {
         setUsers(sortUsers(u));
         setLoadingUsers(false);
-        dispatch({ type: 'load_users', users: u })
       });
   },[]);
 
@@ -156,6 +151,7 @@ export default function Users(props) {
     </div>
   )
 }
+
 
 Users.defaultProps = {
   users: [

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { LoadingDiv, Comment } from '.';
 import { fetchPostComments } from '../functions/apiCalls';
 
+
+// unused
 export default function PostDetails(props) {
 
   const [ comments, setComments ] = useState([]);
@@ -33,6 +35,7 @@ export default function PostDetails(props) {
   )
 }
 
+
 PostDetails.defaultProps = {
   post: {
     body: "Here's the body of a post",
@@ -41,9 +44,5 @@ PostDetails.defaultProps = {
     userId: 1,
   }
 }
-// post
-// body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
-//   id: 1,
-//   title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-//   userId: 1,
+
 

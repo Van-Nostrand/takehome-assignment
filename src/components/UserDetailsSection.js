@@ -1,5 +1,8 @@
 import React from 'react';
 
+
+// composed component wrapper
+// used in the user details screen to encapsulate address, contact info, and work info
 export default function UserDetailsSection(props) {
 
   return (

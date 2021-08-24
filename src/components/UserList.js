@@ -5,22 +5,20 @@ import {
   UserSortingMethodSelector
 } from './index';
 
+// used to render a list of users
 export default function UserList(props) {
 
   const renderUsers = () => {
     return (
       props.users.map((u, i) => (
-        <li 
+        <UserCard 
           key={`user-${i}`} 
-          onClick={e => props.handleSelectUser(e, u.id)}
-        >
-          <UserCard 
-            name={u.name}
-            username={u.username}
-            email={u.email}
-            id={u.id}
-          />
-        </li>
+          name={u.name}
+          username={u.username}
+          email={u.email}
+          id={u.id}
+          handleSelectUser={e => props.handleSelectUser(e, u.id)}
+        />
       ))
     )
   }

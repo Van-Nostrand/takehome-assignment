@@ -3,8 +3,6 @@
 
 .post {
   width: 65%;
-  // 100 - .user-details pad * 2, .post pad, .post margin
-  // width: calc(33% - )
   width: calc(33% - 4rem);
   border: 1px solid vars.$almost-black;
 
@@ -22,14 +20,10 @@
   }
 
   p {
-    // margin-left: 1rem;
     margin-top: 1rem;
 
     @include mixins.respond(tab-port){
       max-width: 95%;
-      // white-space: nowrap;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
     }
   }
 }
